@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Repositories;
+using TestProject.DeviceAppService.Dto;
 using TestProject.Models;
 
 namespace TestProject.DeviceAppService
@@ -20,9 +21,13 @@ namespace TestProject.DeviceAppService
 
         public void InsertDeviceType(DeviceType entity)
         {
+            // Insert ili Update zavisi od Ijdija
+            //DeviceType : Id = 0, ParentId, PropertiesList
+            // PropertiesList : Name, Type, IsMandatory
+
             //Insert  Name | ParentType? | Description?
             // Parent Properties?
-            // Insert New properties?
+            // Insert New properties
         }
 
         public void InsertDevice(Device entity)
@@ -31,6 +36,12 @@ namespace TestProject.DeviceAppService
             // Name | Description?
             // All Parent Properties by ParentType
 
+        }
+
+        public void GetAllDeviceTypesNested(GetAllDeviceTypesNestedDto input)
+        {
+            // Rucno mapiraj DTO
+            // Rekurzija za sve po parentId
         }
     }
 }
