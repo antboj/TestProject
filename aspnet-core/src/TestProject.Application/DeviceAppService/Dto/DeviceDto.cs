@@ -5,10 +5,13 @@ using Abp.Application.Services.Dto;
 
 namespace TestProject.DeviceAppService.Dto
 {
-    class DeviceTypePropertyDto : EntityDto
+    public class DeviceDto : EntityDto
     {
         public string Name { get; set; }
-        public bool Required { get; set; }
-        public string Type { get; set; }
+
+        public string Description { get; set; }
+
+        public string DeviceTypeName { get; set; }
+
     }
 }
