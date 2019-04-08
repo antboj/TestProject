@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Abp.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using TestProject.DeviceAppService.Dto;

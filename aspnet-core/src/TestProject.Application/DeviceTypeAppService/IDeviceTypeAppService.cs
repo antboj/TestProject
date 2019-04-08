@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using TestProject.DeviceTypeAppService.Dto;
 
-namespace TestProject.DeviceAppService
+namespace TestProject.DeviceTypeAppService
 {
     public interface IDeviceTypeAppService
     {

@@ -2,7 +2,6 @@
 using System.Linq;
 using Abp.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
-using TestProject.DeviceAppService;
 using TestProject.DeviceTypeAppService.Dto;
 using TestProject.Models;
 
