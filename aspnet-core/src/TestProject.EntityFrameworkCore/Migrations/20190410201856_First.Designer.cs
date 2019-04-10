@@ -10,8 +10,8 @@ using TestProject.EntityFrameworkCore;
 namespace TestProject.Migrations
 {
     [DbContext(typeof(TestProjectDbContext))]
-    [Migration("20190404132443_Prva")]
-    partial class Prva
+    [Migration("20190410201856_First")]
+    partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

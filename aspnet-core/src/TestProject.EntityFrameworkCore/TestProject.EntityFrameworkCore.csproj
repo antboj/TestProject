@@ -13,6 +13,7 @@
     <Compile Remove="Migrations\20190111071724_Upgraded_To_Abp_v4_1_0.cs" />
     <Compile Remove="Migrations\20190403140105_Prva.cs" />
     <Compile Remove="Migrations\20190404082726_druga.cs" />
+    <Compile Remove="Migrations\20190404132443_Prva.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.1" />
