@@ -8,5 +8,7 @@ namespace TestProject.DeviceTypeAppService
         List<DeviceTypeNestedDto> GetAllDeviceTypesNested(int? parentId);
         IEnumerable<DeviceTypePropertiesNestedDto> GetAllDeviceTypesPropertiesNested(int? parentId);
         IEnumerable<DeviceTypePropertiesNestedDto> InsertOrUpdateDeviceType(DeviceTypeDto input);
+        //List<DeviceTypePropertyDto> GetProperties(int typeId);
+
     }
 }

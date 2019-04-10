@@ -9,6 +9,5 @@ namespace TestProject.DeviceAppService.Dto
         public string Description { get; set; }
 
         public string DeviceTypeName { get; set; }
-
     }
 }

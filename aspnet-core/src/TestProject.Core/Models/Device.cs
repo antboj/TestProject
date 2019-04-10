@@ -18,6 +18,6 @@ namespace TestProject.Models
 
         public int DeviceTypeId { get; set; }
 
-        public List<DevicePropertyValue> DeviceTypeValues { get; set; }
+        public List<DevicePropertyValue> DeviceTypeValues { get; set; } = new List<DevicePropertyValue>();
     }
 }

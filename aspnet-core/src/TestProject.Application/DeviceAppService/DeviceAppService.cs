@@ -12,16 +12,18 @@ namespace TestProject.DeviceAppService
     public class DeviceAppService : TestProjectAppServiceBase, IDeviceAppService
     {
         private readonly IRepository<Device> _deviceRepository;
-        private readonly IRepository<DevicePropertyValue> _devicePropertyValueRepository;
         private readonly IDeviceTypeAppService _deviceTypeAppService;
 
-        public DeviceAppService(IRepository<Device> deviceRepository, IRepository<DevicePropertyValue> devicePropertyValueRepository, IDeviceTypeAppService deviceTypeAppService)
+        public DeviceAppService(IRepository<Device> deviceRepository, IDeviceTypeAppService deviceTypeAppService)
         {
             _deviceRepository = deviceRepository;
-            _devicePropertyValueRepository = devicePropertyValueRepository;
             _deviceTypeAppService = deviceTypeAppService;
         }
 
+        /// <summary>
+        /// Return all Devices
+        /// </summary>
+        /// <returns></returns>
         public List<DeviceDto> GetAllDevices()
         {
             var allDevices = _deviceRepository.GetAll().Include(x => x.DeviceType).ToList();
@@ -31,6 +33,11 @@ namespace TestProject.DeviceAppService
             return result;
         }
 
+        /// <summary>
+        /// Return all DeviceTypes
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IEnumerable<DeviceTypePropertiesNestedDto> GetAllDeviceTypes(int id)
         {
             return _deviceTypeAppService.GetAllDeviceTypesPropertiesNested(id);

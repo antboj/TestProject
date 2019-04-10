@@ -19,7 +19,7 @@ namespace TestProject.Models
         public DeviceType ParentDeviceType { get; set; }
         public int? ParentId { get; set; }
 
-        public List<Device> Devices { get; set; }
-        public List<DeviceTypeProperty> DeviceTypeProperties { get; set; }
+        public List<Device> Devices { get; set; } = new List<Device>();
+        public List<DeviceTypeProperty> DeviceTypeProperties { get; set; } = new List<DeviceTypeProperty>();
     }
 }
