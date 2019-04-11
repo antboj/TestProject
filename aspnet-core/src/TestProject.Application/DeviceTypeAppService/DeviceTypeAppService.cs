@@ -27,7 +27,7 @@ namespace TestProject.DeviceTypeAppService
         /// </summary>
         /// <param name="parentId"></param>
         /// <returns></returns>
-        public List<DeviceTypeNestedDto> GetAllDeviceTypesNested(int? parentId)
+        public List<DeviceTypeNestedDto> GetDeviceTypes(int? parentId)
         {
             var baseDeviceTypes = _deviceTypeRepository.GetAll()
                 .Where(x => x.ParentId == parentId).ToList();
@@ -42,7 +42,7 @@ namespace TestProject.DeviceTypeAppService
                     Name = deviceType.Name,
                     Description = deviceType.Description,
                     ParentId = deviceType.ParentId,
-                    Children = GetAllDeviceTypesNested(deviceType.Id)
+                    Children = GetDeviceTypes(deviceType.Id)
                 };
 
                 result.Add(currentType);
@@ -56,7 +56,7 @@ namespace TestProject.DeviceTypeAppService
         /// </summary>
         /// <param name="deviceTypeId"></param>
         /// <returns></returns>
-        public IEnumerable<DeviceTypePropertiesNestedDto> GetAllDeviceTypesPropertiesNested(int? deviceTypeId)
+        public IEnumerable<DeviceTypePropertiesNestedDto> GetDeviceTypesWithProperties(int? deviceTypeId)
         {
             var allDeviceTypes = _deviceTypeRepository.GetAll().Include(x => x.DeviceTypeProperties)
                 .First(x => x.Id == deviceTypeId);
@@ -81,7 +81,7 @@ namespace TestProject.DeviceTypeAppService
             result.Add(currentType);
 
 
-            return result.Concat(GetAllDeviceTypesPropertiesNested(allDeviceTypes.ParentId)).OrderBy(x => x.Id);
+            return result.Concat(GetDeviceTypesWithProperties(allDeviceTypes.ParentId)).OrderBy(x => x.Id);
         }
 
         /// <summary>
@@ -90,15 +90,15 @@ namespace TestProject.DeviceTypeAppService
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public IEnumerable<DeviceTypePropertiesNestedDto> InsertOrUpdateDeviceType(DeviceTypeDto input)
+        public IEnumerable<DeviceTypePropertiesNestedDto> CreateOrUpdateDeviceType(DeviceTypeDto input)
         {
             if (input.Id == 0)
             {
                 var newDeviceType = ObjectMapper.Map<DeviceType>(input);
 
-                var lastInsertedDeviceTypeid = _deviceTypeRepository.InsertAndGetId(newDeviceType);
+                var lastInsertedDeviceTypeId = _deviceTypeRepository.InsertAndGetId(newDeviceType);
 
-                var deviceTypes = GetAllDeviceTypesPropertiesNested(lastInsertedDeviceTypeid);
+                var deviceTypes = GetDeviceTypesWithProperties(lastInsertedDeviceTypeId);
 
                 return deviceTypes;
             }
@@ -107,7 +107,7 @@ namespace TestProject.DeviceTypeAppService
 
             ObjectMapper.Map(input, deviceType);
 
-            var updatedDeviceTypes = GetAllDeviceTypesPropertiesNested(deviceType.Id);
+            var updatedDeviceTypes = GetDeviceTypesWithProperties(deviceType.Id);
 
             return updatedDeviceTypes;
             // Insert ili Update zavisi od Ijdija
@@ -224,7 +224,7 @@ namespace TestProject.DeviceTypeAppService
         /// </summary>
         /// <param name="typeId"></param>
         /// <returns></returns>
-        public List<ExpandoObject> GetAllDevicesInfo(int typeId)
+        public List<ExpandoObject> GetDevicesByType(int typeId)
         {
             var devices = _deviceRepository.GetAll().Include(x => x.DeviceTypeValues)
                 .Where(x => x.DeviceTypeId == typeId);
@@ -255,6 +255,11 @@ namespace TestProject.DeviceTypeAppService
                 allDevicesList.Add((ExpandoObject) sampleDevice);
             }
             return allDevicesList;
+        }
+
+        public void DeleteDeviceType(int id)
+        {
+
         }
     }
 }
