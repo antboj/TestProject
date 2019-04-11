@@ -6,7 +6,7 @@ namespace TestProject.DeviceAppService
 {
     public interface IDeviceAppService
     {
-        void CreateOrUpdateDevice(Device entity);
+        void CreateOrUpdateDevice(NewDeviceDto input);
         List<DeviceDto> GetDevices();
         void DeleteDevice(int id);
     }
