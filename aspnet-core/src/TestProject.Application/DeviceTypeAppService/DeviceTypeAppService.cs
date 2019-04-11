@@ -14,12 +14,14 @@ namespace TestProject.DeviceTypeAppService
         private readonly IRepository<DeviceType> _deviceTypeRepository;
         private readonly IRepository<DeviceTypeProperty> _deviceTypePropertyRepository;
         private readonly IRepository<Device> _deviceRepository;
+        private readonly IRepository<DevicePropertyValue> _devicePropertyValueRepository;
 
-        public DeviceTypeAppService(IRepository<DeviceType> deviceTypeRepository, IRepository<DeviceTypeProperty> deviceTypePropertyRepository, IRepository<Device> deviceRepository)
+        public DeviceTypeAppService(IRepository<DeviceType> deviceTypeRepository, IRepository<DeviceTypeProperty> deviceTypePropertyRepository, IRepository<Device> deviceRepository, IRepository<DevicePropertyValue> devicePropertyValueRepository)
         {
             _deviceTypeRepository = deviceTypeRepository;
             _deviceTypePropertyRepository = deviceTypePropertyRepository;
             _deviceRepository = deviceRepository;
+            _devicePropertyValueRepository = devicePropertyValueRepository;
         }
 
         /// <summary>
@@ -42,7 +44,7 @@ namespace TestProject.DeviceTypeAppService
                     Name = deviceType.Name,
                     Description = deviceType.Description,
                     ParentId = deviceType.ParentId,
-                    Children = GetDeviceTypes(deviceType.Id)
+                    Items = GetDeviceTypes(deviceType.Id)
                 };
 
                 result.Add(currentType);
@@ -140,33 +142,38 @@ namespace TestProject.DeviceTypeAppService
             }
         }
 
-        //public IEnumerable<GetChildrenDeviceTypesDto> GetDeviceTypeWithChildren(int parentId)
-        //{
-        //    var type = _deviceTypeRepository.GetAll().Include(x => x.Devices).Include(x => x.DeviceTypeProperties)
-        //        .Include(x => x.DeviceTypeProperties)
-        //        .First(x => x.Id == parentId);
+        /// <summary>
+        /// Get DeviceType with all children
+        /// </summary>
+        /// <param name="parentId"></param>
+        /// <returns></returns>
+        private List<DeviceType> GetDeviceTypeWithChildren(int parentId)
+        {
+            var type = _deviceTypeRepository.GetAll().Include(x => x.Devices).ThenInclude(x => x.DeviceTypeValues)
+                .Include(x => x.DeviceTypeProperties)
+                .First(x => x.Id == parentId);
 
-        //    var children = _deviceTypeRepository.GetAll().Include(x => x.Devices).Include(x => x.DeviceTypeProperties)
-        //        .Include(x => x.DeviceTypeProperties)
-        //        .Where(x => x.ParentId == parentId).ToList();
+            var children = _deviceTypeRepository.GetAll().Include(x => x.Devices).ThenInclude(x => x.DeviceTypeValues)
+                .Include(x => x.DeviceTypeProperties)
+                .Where(x => x.ParentId == parentId).ToList();
 
-        //    var list = new List<GetChildrenDeviceTypesDto>();
+            var list = new List<DeviceType>();
 
-        //    if (!children.Any())
-        //    {
-        //        list.Add(ObjectMapper.Map<GetChildrenDeviceTypesDto>(type));
-        //        return list;
-        //    }
+            if (!children.Any())
+            {
+                list.Add(type);
+                return list;
+            }
 
-        //    foreach (var child in children)
-        //    {
-        //        list.AddRange(GetDeviceTypeWithChildren(child.Id));
-        //    }
+            foreach (var child in children)
+            {
+                list.AddRange(GetDeviceTypeWithChildren(child.Id));
+            }
 
-        //    list.Add(ObjectMapper.Map<GetChildrenDeviceTypesDto>(type));
-        //    return list;
+            list.Add(type);
+            return list;
 
-        //}
+        }
 
         /// <summary>
         /// Return all DeviceTypes for specific DeviceType
@@ -257,9 +264,27 @@ namespace TestProject.DeviceTypeAppService
             return allDevicesList;
         }
 
+        /// <summary>
+        /// Delete Type and all children types
+        /// </summary>
+        /// <param name="id"></param>
         public void DeleteDeviceType(int id)
         {
+            var allTypes = GetDeviceTypeWithChildren(id);
+            var sortedTypes = allTypes.OrderByDescending(x => x.Id);
 
+            foreach (var currentType in sortedTypes)
+            {
+                foreach (var currentDevice in currentType.Devices)
+                {
+                    foreach (var propValue in currentDevice.DeviceTypeValues)
+                    {
+                        _devicePropertyValueRepository.Delete(propValue);
+                    }
+                    _deviceRepository.Delete(currentDevice);
+                }
+                _deviceTypeRepository.Delete(currentType);
+            }
         }
     }
 }

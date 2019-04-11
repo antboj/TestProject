@@ -23,7 +23,7 @@ namespace TestProject
                     .ForMember(dest => dest.Name, source => source.MapFrom(src => src.Name))
                     .ForMember(dest => dest.Description, source => source.MapFrom(src => src.Description))
                     .ForMember(dest => dest.ParentId, source => source.MapFrom(src => src.ParentDeviceType.Id))
-                    .ForMember(d => d.Children, s => s.Ignore());
+                    .ForMember(d => d.Items, s => s.Ignore());
 
                 config.CreateMap<DeviceTypeProperty, DeviceTypePropertyDto>()
                     .ForMember(d => d.NameProperty, s => s.MapFrom(x => x.Name))

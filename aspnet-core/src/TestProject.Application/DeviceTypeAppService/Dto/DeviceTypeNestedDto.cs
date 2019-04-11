@@ -8,6 +8,6 @@ namespace TestProject.DeviceTypeAppService.Dto
         public string Name { get; set; }
         public int? ParentId { get; set; }
         public string Description { get; set; }
-        public List<DeviceTypeNestedDto> Children { get; set; } = new List<DeviceTypeNestedDto>();
+        public List<DeviceTypeNestedDto> Items { get; set; } = new List<DeviceTypeNestedDto>();
     }
 }
