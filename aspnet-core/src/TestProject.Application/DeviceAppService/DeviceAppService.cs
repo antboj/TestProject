@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Abp.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using TestProject.DeviceAppService.Dto;
 using TestProject.Models;
+using TestProject.QueryInfoService;
 
 namespace TestProject.DeviceAppService
 {
@@ -33,6 +36,10 @@ namespace TestProject.DeviceAppService
             return result;
         }
         
+        /// <summary>
+        /// Create or update Device
+        /// </summary>
+        /// <param name="input"></param>
         public void CreateOrUpdateDevice(NewDeviceDto input)
         {
             if (input.Id == 0)
@@ -98,6 +105,72 @@ namespace TestProject.DeviceAppService
         {
             var deviceToDelete = _deviceRepository.Get(id);
             _deviceRepository.Delete(deviceToDelete);
+        }
+
+        /// <summary>
+        /// Search
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public List<Device> QueryInfoSearch(QueryInfo input)
+        {
+            var obj = new QueryInfo();
+            var skipNum = input.Skip;
+            var takeNum = input.Take;
+            var query = _deviceRepository.GetAll();
+            var sorters = input.Sorters;
+            var rules = input.Filter.Rules;
+            var condition = input.Filter.Condition;
+            var parameterEx = Expression.Parameter(typeof(Device), "x");
+            Expression containsExpression = null;
+            Expression result;
+            foreach (var property in input.SearchProperties)
+            {
+                containsExpression = obj.GetBinaryExpression(parameterEx, "ct", property, input.SearchText);
+            }
+            result = obj.GetFilteredList<Device>(parameterEx, rules, condition);
+            result = Expression.AndAlso(containsExpression ?? throw new InvalidOperationException(), result);
+            
+            var whereEx = obj.GetWhere<Device>(result, parameterEx);
+
+            query = query.Where(whereEx);
+
+            var sortedFirst = false;
+            foreach (var sort in sorters)
+            {
+                var sortProperty = sort.Property;
+                var sortDirection = sort.Direction;
+
+                switch (sortDirection)
+                {
+                    case "asc":
+                        if (!sortedFirst)
+                        {
+                            query = query.OrderBy(obj.GetOrderByExpression<Device>(sortProperty));
+                            sortedFirst = true;
+                        }
+                        else
+                        {
+                            query = ((IOrderedQueryable<Device>)query).ThenBy(obj.GetOrderByExpression<Device>(sortProperty));
+                        }
+                        break;
+                    case "desc":
+                        if (!sortedFirst)
+                        {
+                            query = query.OrderByDescending(obj.GetOrderByExpression<Device>(sortProperty));
+                            sortedFirst = true;
+                        }
+                        else
+                        {
+                            query = ((IOrderedQueryable<Device>)query).ThenByDescending(obj.GetOrderByExpression<Device>(sortProperty));
+                        }
+                        break;
+                    default:
+                        throw new InvalidOperationException();
+                }
+            }
+            query = query.Skip(skipNum).Take(takeNum);
+            return query.ToList();
         }
     }
 }
