@@ -112,7 +112,7 @@ namespace TestProject.DeviceAppService
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public List<Device> QueryInfoSearch(QueryInfo input)
+        public List<DeviceDto> QueryInfoSearch(QueryInfo input)
         {
             var obj = new QueryInfo();
             var skipNum = input.Skip;
@@ -122,14 +122,16 @@ namespace TestProject.DeviceAppService
             var rules = input.Filter.Rules;
             var condition = input.Filter.Condition;
             var parameterEx = Expression.Parameter(typeof(Device), "x");
-            Expression containsExpression = null;
+            Expression containsExpression = Expression.Constant(false);
+            Expression currentContainsExpression;
             Expression result;
             foreach (var property in input.SearchProperties)
             {
-                containsExpression = obj.GetBinaryExpression(parameterEx, "ct", property, input.SearchText);
+                currentContainsExpression = obj.GetBinaryExpression(parameterEx, "ct", property, input.SearchText);
+                containsExpression = Expression.OrElse(containsExpression,currentContainsExpression);
             }
             result = obj.GetFilteredList<Device>(parameterEx, rules, condition);
-            result = Expression.AndAlso(containsExpression ?? throw new InvalidOperationException(), result);
+            result = Expression.AndAlso(containsExpression, result);
             
             var whereEx = obj.GetWhere<Device>(result, parameterEx);
 
@@ -170,7 +172,8 @@ namespace TestProject.DeviceAppService
                 }
             }
             query = query.Skip(skipNum).Take(takeNum);
-            return query.ToList();
+            var queryToReturn  = ObjectMapper.Map<List<DeviceDto>>(query);
+            return queryToReturn.ToList();
         }
     }
 }

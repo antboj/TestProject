@@ -11,6 +11,6 @@ namespace TestProject.DeviceAppService
         void CreateOrUpdateDevice(NewDeviceDto input);
         List<DeviceDto> GetDevices();
         void DeleteDevice(int id);
-        List<Device> QueryInfoSearch(QueryInfo input);
+        List<DeviceDto> QueryInfoSearch(QueryInfo input);
     }
 }

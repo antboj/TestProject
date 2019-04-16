@@ -50,14 +50,25 @@ namespace TestProject.QueryInfoService
         {
             BinaryExpression binEx;
             var trueExpression = Expression.Constant(true, typeof(bool));
+            var ignore = Expression.Constant(StringComparison.OrdinalIgnoreCase);
             switch (operatorValue)
             {
                 case "eq":
                     return Expression.Equal(propertyEx, constantEx);
                 case "ct":
-                    MethodInfo methodInfo = typeof(string).GetMethod("Contains", new[] {typeof(string)});
-                    var contains = Expression.Call(propertyEx, methodInfo, constantEx);
+                    MethodInfo containsMethodInfo = typeof(string).GetMethod("Contains", new[] {typeof(string), typeof(StringComparison)});
+                    var contains = Expression.Call(propertyEx, containsMethodInfo, constantEx, ignore);
                     binEx = Expression.Equal(contains, trueExpression);
+                    break;
+                case "stw":
+                    MethodInfo startsWithMethodInfo = typeof(string).GetMethod("StartsWith", new[] { typeof(string), typeof(StringComparison) });
+                    var startsWith = Expression.Call(propertyEx, startsWithMethodInfo, constantEx, ignore);
+                    binEx = Expression.Equal(startsWith, trueExpression);
+                    break;
+                case "enw":
+                    MethodInfo endsWithMethodInfo = typeof(string).GetMethod("EndsWith", new[] { typeof(string), typeof(StringComparison) });
+                    var endsWith = Expression.Call(propertyEx, endsWithMethodInfo, constantEx, ignore);
+                    binEx = Expression.Equal(endsWith, trueExpression);
                     break;
                 default:
                     throw new InvalidOperationException();
