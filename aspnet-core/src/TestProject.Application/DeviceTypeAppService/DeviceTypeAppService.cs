@@ -112,13 +112,6 @@ namespace TestProject.DeviceTypeAppService
             var updatedDeviceTypes = GetDeviceTypesWithProperties(deviceType.Id);
 
             return updatedDeviceTypes;
-            // Insert ili Update zavisi od Ijdija
-            //DeviceType : Id = 0, ParentId, PropertiesList
-            // PropertiesList : Name, Type, IsMandatory
-
-            //Insert  Name | ParentType? | Description?
-            // Parent Properties?
-            // Insert New properties
         }
 
         /// <summary>

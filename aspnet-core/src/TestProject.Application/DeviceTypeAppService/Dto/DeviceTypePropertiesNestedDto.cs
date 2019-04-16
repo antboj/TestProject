@@ -9,6 +9,5 @@ namespace TestProject.DeviceTypeAppService.Dto
         public int? ParentId { get; set; }
         public string Description { get; set; }
         public List<DeviceTypePropertyDto> Properties { get; set; } = new List<DeviceTypePropertyDto>();
-        //public List<DeviceTypePropertiesNestedDto> Children { get; set; } = new List<DeviceTypePropertiesNestedDto>();
     }
 }

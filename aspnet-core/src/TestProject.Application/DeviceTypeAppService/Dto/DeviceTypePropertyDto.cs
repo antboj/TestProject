@@ -7,5 +7,6 @@ namespace TestProject.DeviceTypeAppService.Dto
         public string NameProperty { get; set; }
         public bool Required { get; set; }
         public string Type { get; set; }
+        public int DeviceTypeId { get; set; }
     }
 }
