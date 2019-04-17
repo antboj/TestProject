@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Abp.Domain.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using TestProject.DeviceAppService.Dto;
 using TestProject.Models;
@@ -92,9 +93,6 @@ namespace TestProject.DeviceAppService
                     foundValue.Value = propertyValue.Value;
                 }
             }
-            // Parent DeviceType
-            // Name | Description?
-            // All Parent Properties by ParentType
         }
 
         /// <summary>

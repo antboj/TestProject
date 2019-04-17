@@ -36,20 +36,7 @@ namespace TestProject.Web.Host.Startup
             services.AddMvc(
                 options => options.Filters.Add(new CorsAuthorizationFilterFactory(_defaultCorsPolicyName))
             );
-
-            // Identity Server Code
-            services.AddMvcCore()
-                .AddAuthorization()
-                .AddJsonFormatters();
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
-                {
-                    options.Authority = "http://localhost:21021";
-                    options.RequireHttpsMetadata = false;
-
-                    options.Audience = "api1";
-                });
-
+            
             IdentityRegistrar.Register(services);
             AuthConfigurer.Configure(services, _appConfiguration);
 
