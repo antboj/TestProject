@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Abp.IdentityServer4;
+using Microsoft.EntityFrameworkCore;
 using Abp.Zero.EntityFrameworkCore;
 using TestProject.Authorization.Roles;
 using TestProject.Authorization.Users;
@@ -7,7 +8,7 @@ using TestProject.MultiTenancy;
 
 namespace TestProject.EntityFrameworkCore
 {
-    public class TestProjectDbContext : AbpZeroDbContext<Tenant, Role, User, TestProjectDbContext>
+    public class TestProjectDbContext : AbpZeroDbContext<Tenant, Role, User, TestProjectDbContext>, IAbpPersistedGrantDbContext
     {
         /* Define a DbSet for each entity of the application */
         public  DbSet<Device> Devices { get; set; }
@@ -19,5 +20,7 @@ namespace TestProject.EntityFrameworkCore
             : base(options)
         {
         }
+
+        public DbSet<PersistedGrantEntity> PersistedGrants { get; set; }
     }
 }
