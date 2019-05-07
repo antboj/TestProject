@@ -7,28 +7,28 @@ namespace TestProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_AbpRoleClaims_AbpRoles_UserId",
-                table: "AbpRoleClaims");
+                "FK_AbpRoleClaims_AbpRoles_UserId",
+                "AbpRoleClaims");
 
             migrationBuilder.DropIndex(
-                name: "IX_AbpRoleClaims_UserId",
-                table: "AbpRoleClaims");
+                "IX_AbpRoleClaims_UserId",
+                "AbpRoleClaims");
 
             migrationBuilder.DropColumn(
-                name: "UserId",
-                table: "AbpRoleClaims");
+                "UserId",
+                "AbpRoleClaims");
 
             migrationBuilder.AddColumn<bool>(
-                name: "IsDisabled",
-                table: "AbpLanguages",
+                "IsDisabled",
+                "AbpLanguages",
                 nullable: false,
                 defaultValue: false);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_AbpRoleClaims_AbpRoles_RoleId",
-                table: "AbpRoleClaims",
-                column: "RoleId",
-                principalTable: "AbpRoles",
+                "FK_AbpRoleClaims_AbpRoles_RoleId",
+                "AbpRoleClaims",
+                "RoleId",
+                "AbpRoles",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -36,28 +36,28 @@ namespace TestProject.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_AbpRoleClaims_AbpRoles_RoleId",
-                table: "AbpRoleClaims");
+                "FK_AbpRoleClaims_AbpRoles_RoleId",
+                "AbpRoleClaims");
 
             migrationBuilder.DropColumn(
-                name: "IsDisabled",
-                table: "AbpLanguages");
+                "IsDisabled",
+                "AbpLanguages");
 
             migrationBuilder.AddColumn<int>(
-                name: "UserId",
-                table: "AbpRoleClaims",
+                "UserId",
+                "AbpRoleClaims",
                 nullable: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpRoleClaims_UserId",
-                table: "AbpRoleClaims",
-                column: "UserId");
+                "IX_AbpRoleClaims_UserId",
+                "AbpRoleClaims",
+                "UserId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_AbpRoleClaims_AbpRoles_UserId",
-                table: "AbpRoleClaims",
-                column: "UserId",
-                principalTable: "AbpRoles",
+                "FK_AbpRoleClaims_AbpRoles_UserId",
+                "AbpRoleClaims",
+                "UserId",
+                "AbpRoles",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }

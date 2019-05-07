@@ -1,18 +1,18 @@
 ﻿using System.Threading.Tasks;
 using Shouldly;
-using Xunit;
 using TestProject.Sessions;
+using Xunit;
 
 namespace TestProject.Tests.Sessions
 {
     public class SessionAppService_Tests : TestProjectTestBase
     {
-        private readonly ISessionAppService _sessionAppService;
-
         public SessionAppService_Tests()
         {
             _sessionAppService = Resolve<ISessionAppService>();
         }
+
+        private readonly ISessionAppService _sessionAppService;
 
         [MultiTenantFact]
         public async Task Should_Get_Current_User_When_Logged_In_As_Host()

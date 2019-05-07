@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Abp.Authorization;
+using Abp.Configuration;
+using Abp.Domain.Uow;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Abp.Authorization;
-using Abp.Configuration;
-using Abp.Domain.Uow;
 using TestProject.Authorization.Roles;
 using TestProject.Authorization.Users;
 using TestProject.MultiTenancy;
@@ -15,19 +15,19 @@ namespace TestProject.Identity
     public class SignInManager : AbpSignInManager<Tenant, Role, User>
     {
         public SignInManager(
-            UserManager userManager, 
+            UserManager userManager,
             IHttpContextAccessor contextAccessor,
-            UserClaimsPrincipalFactory claimsFactory, 
-            IOptions<IdentityOptions> optionsAccessor, 
+            UserClaimsPrincipalFactory claimsFactory,
+            IOptions<IdentityOptions> optionsAccessor,
             ILogger<SignInManager<User>> logger,
             IUnitOfWorkManager unitOfWorkManager,
             ISettingManager settingManager,
-            IAuthenticationSchemeProvider schemes) 
+            IAuthenticationSchemeProvider schemes)
             : base(
-                userManager, 
-                contextAccessor, 
-                claimsFactory, 
-                optionsAccessor, 
+                userManager,
+                contextAccessor,
+                claimsFactory,
+                optionsAccessor,
                 logger,
                 unitOfWorkManager,
                 settingManager,

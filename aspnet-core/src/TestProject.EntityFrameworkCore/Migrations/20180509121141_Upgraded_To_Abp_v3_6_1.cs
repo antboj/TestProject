@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
 namespace TestProject.Migrations
 {
@@ -9,8 +7,8 @@ namespace TestProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "BrowserInfo",
-                table: "AbpUserLoginAttempts",
+                "BrowserInfo",
+                "AbpUserLoginAttempts",
                 maxLength: 512,
                 nullable: true,
                 oldClrType: typeof(string),
@@ -18,8 +16,8 @@ namespace TestProject.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "BrowserInfo",
-                table: "AbpEntityChangeSets",
+                "BrowserInfo",
+                "AbpEntityChangeSets",
                 maxLength: 512,
                 nullable: true,
                 oldClrType: typeof(string),
@@ -27,8 +25,8 @@ namespace TestProject.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "BrowserInfo",
-                table: "AbpAuditLogs",
+                "BrowserInfo",
+                "AbpAuditLogs",
                 maxLength: 512,
                 nullable: true,
                 oldClrType: typeof(string),
@@ -39,8 +37,8 @@ namespace TestProject.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "BrowserInfo",
-                table: "AbpUserLoginAttempts",
+                "BrowserInfo",
+                "AbpUserLoginAttempts",
                 maxLength: 256,
                 nullable: true,
                 oldClrType: typeof(string),
@@ -48,8 +46,8 @@ namespace TestProject.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "BrowserInfo",
-                table: "AbpEntityChangeSets",
+                "BrowserInfo",
+                "AbpEntityChangeSets",
                 maxLength: 256,
                 nullable: true,
                 oldClrType: typeof(string),
@@ -57,8 +55,8 @@ namespace TestProject.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "BrowserInfo",
-                table: "AbpAuditLogs",
+                "BrowserInfo",
+                "AbpAuditLogs",
                 maxLength: 256,
                 nullable: true,
                 oldClrType: typeof(string),

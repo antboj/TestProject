@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using TestProject.DeviceAppService.Dto;
-using TestProject.Models;
 using TestProject.QueryInfoService;
 
 namespace TestProject.DeviceAppService

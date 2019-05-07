@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace TestProject.Controllers
 {
-    public abstract class TestProjectControllerBase: AbpController
+    public abstract class TestProjectControllerBase : AbpController
     {
         protected TestProjectControllerBase()
         {

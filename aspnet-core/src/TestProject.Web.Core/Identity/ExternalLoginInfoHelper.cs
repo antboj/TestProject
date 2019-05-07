@@ -13,16 +13,10 @@ namespace TestProject.Identity
             string surname = null;
 
             var givennameClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName);
-            if (givennameClaim != null && !givennameClaim.Value.IsNullOrEmpty())
-            {
-                name = givennameClaim.Value;
-            }
+            if (givennameClaim != null && !givennameClaim.Value.IsNullOrEmpty()) name = givennameClaim.Value;
 
             var surnameClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname);
-            if (surnameClaim != null && !surnameClaim.Value.IsNullOrEmpty())
-            {
-                surname = surnameClaim.Value;
-            }
+            if (surnameClaim != null && !surnameClaim.Value.IsNullOrEmpty()) surname = surnameClaim.Value;
 
             if (name == null || surname == null)
             {
@@ -33,7 +27,7 @@ namespace TestProject.Identity
                     if (!nameSurName.IsNullOrEmpty())
                     {
                         var lastSpaceIndex = nameSurName.LastIndexOf(' ');
-                        if (lastSpaceIndex < 1 || lastSpaceIndex > (nameSurName.Length - 2))
+                        if (lastSpaceIndex < 1 || lastSpaceIndex > nameSurName.Length - 2)
                         {
                             name = surname = nameSurName;
                         }

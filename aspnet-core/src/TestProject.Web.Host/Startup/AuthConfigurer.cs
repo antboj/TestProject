@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Abp.Runtime.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Abp.Runtime.Security;
 
 namespace TestProject.Web.Host.Startup
 {
@@ -15,8 +15,8 @@ namespace TestProject.Web.Host.Startup
         public static void Configure(IServiceCollection services, IConfiguration configuration)
         {
             if (bool.Parse(configuration["Authentication:JwtBearer:IsEnabled"]))
-            {
-                services.AddAuthentication(options => {
+                services.AddAuthentication(options =>
+                {
                     options.DefaultAuthenticateScheme = "JwtBearer";
                     options.DefaultChallengeScheme = "JwtBearer";
                 }).AddJwtBearer("JwtBearer", options =>
@@ -27,7 +27,9 @@ namespace TestProject.Web.Host.Startup
                     {
                         // The signing key must match!
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["Authentication:JwtBearer:SecurityKey"])),
+                        IssuerSigningKey =
+                            new SymmetricSecurityKey(
+                                Encoding.ASCII.GetBytes(configuration["Authentication:JwtBearer:SecurityKey"])),
 
                         // Validate the JWT Issuer (iss) claim
                         ValidateIssuer = true,
@@ -49,7 +51,6 @@ namespace TestProject.Web.Host.Startup
                         OnMessageReceived = QueryStringTokenResolver
                     };
                 });
-            }
         }
 
         /* This method is needed to authorize SignalR javascript client.
@@ -58,17 +59,10 @@ namespace TestProject.Web.Host.Startup
         {
             if (!context.HttpContext.Request.Path.HasValue ||
                 !context.HttpContext.Request.Path.Value.StartsWith("/signalr"))
-            {
-                // We are just looking for signalr clients
                 return Task.CompletedTask;
-            }
 
             var qsAuthToken = context.HttpContext.Request.Query["enc_auth_token"].FirstOrDefault();
-            if (qsAuthToken == null)
-            {
-                // Cookie value does not matches to querystring value
-                return Task.CompletedTask;
-            }
+            if (qsAuthToken == null) return Task.CompletedTask;
 
             // Set auth token from cookie
             context.Token = SimpleStringCipher.Instance.Decrypt(qsAuthToken, AppConsts.DefaultPassPhrase);

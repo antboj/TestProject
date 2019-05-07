@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
 namespace TestProject.Migrations
 {
@@ -9,56 +7,56 @@ namespace TestProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Value",
-                table: "AbpUserTokens",
+                "Value",
+                "AbpUserTokens",
                 maxLength: 512,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "AbpUserTokens",
+                "Name",
+                "AbpUserTokens",
                 maxLength: 128,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "LoginProvider",
-                table: "AbpUserTokens",
+                "LoginProvider",
+                "AbpUserTokens",
                 maxLength: 64,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "SecurityStamp",
-                table: "AbpUsers",
+                "SecurityStamp",
+                "AbpUsers",
                 maxLength: 128,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "PhoneNumber",
-                table: "AbpUsers",
+                "PhoneNumber",
+                "AbpUsers",
                 maxLength: 32,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "ConcurrencyStamp",
-                table: "AbpUsers",
+                "ConcurrencyStamp",
+                "AbpUsers",
                 maxLength: 128,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "ConcurrencyStamp",
-                table: "AbpRoles",
+                "ConcurrencyStamp",
+                "AbpRoles",
                 maxLength: 128,
                 nullable: true,
                 oldClrType: typeof(string),
@@ -68,56 +66,56 @@ namespace TestProject.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Value",
-                table: "AbpUserTokens",
+                "Value",
+                "AbpUserTokens",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 512,
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "AbpUserTokens",
+                "Name",
+                "AbpUserTokens",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 128,
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "LoginProvider",
-                table: "AbpUserTokens",
+                "LoginProvider",
+                "AbpUserTokens",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 64,
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "SecurityStamp",
-                table: "AbpUsers",
+                "SecurityStamp",
+                "AbpUsers",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 128,
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "PhoneNumber",
-                table: "AbpUsers",
+                "PhoneNumber",
+                "AbpUsers",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 32,
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "ConcurrencyStamp",
-                table: "AbpUsers",
+                "ConcurrencyStamp",
+                "AbpUsers",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 128,
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "ConcurrencyStamp",
-                table: "AbpRoles",
+                "ConcurrencyStamp",
+                "AbpRoles",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 128,

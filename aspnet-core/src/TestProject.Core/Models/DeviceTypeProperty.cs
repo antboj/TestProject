@@ -6,12 +6,10 @@ namespace TestProject.Models
 {
     public class DeviceTypeProperty : Entity
     {
-        [Required]
-        [StringLength(255)]
-        public string Name { get; set; }
+        [Required] [StringLength(255)] public string Name { get; set; }
 
-        [ForeignKey(nameof(DeviceTypeId))]
-        public DeviceType DeviceType { get; set; }
+        [ForeignKey(nameof(DeviceTypeId))] public DeviceType DeviceType { get; set; }
+
         public int DeviceTypeId { get; set; }
 
         public string Type { get; set; }

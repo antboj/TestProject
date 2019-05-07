@@ -13,26 +13,27 @@ using Abp.Linq.Extensions;
 using Abp.Localization;
 using Abp.Runtime.Session;
 using Abp.UI;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TestProject.Authorization;
 using TestProject.Authorization.Accounts;
 using TestProject.Authorization.Roles;
 using TestProject.Authorization.Users;
 using TestProject.Roles.Dto;
 using TestProject.Users.Dto;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace TestProject.Users
 {
     [AbpAuthorize(PermissionNames.Pages_Users)]
-    public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>, IUserAppService
+    public class UserAppService :
+        AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>, IUserAppService
     {
-        private readonly UserManager _userManager;
-        private readonly RoleManager _roleManager;
-        private readonly IRepository<Role> _roleRepository;
-        private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IAbpSession _abpSession;
         private readonly LogInManager _logInManager;
+        private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly RoleManager _roleManager;
+        private readonly IRepository<Role> _roleRepository;
+        private readonly UserManager _userManager;
 
         public UserAppService(
             IRepository<User, long> repository,
@@ -65,10 +66,7 @@ namespace TestProject.Users
 
             CheckErrors(await _userManager.CreateAsync(user, input.Password));
 
-            if (input.RoleNames != null)
-            {
-                CheckErrors(await _userManager.SetRoles(user, input.RoleNames));
-            }
+            if (input.RoleNames != null) CheckErrors(await _userManager.SetRoles(user, input.RoleNames));
 
             CurrentUnitOfWork.SaveChanges();
 
@@ -85,10 +83,7 @@ namespace TestProject.Users
 
             CheckErrors(await _userManager.UpdateAsync(user));
 
-            if (input.RoleNames != null)
-            {
-                CheckErrors(await _userManager.SetRoles(user, input.RoleNames));
-            }
+            if (input.RoleNames != null) CheckErrors(await _userManager.SetRoles(user, input.RoleNames));
 
             return await Get(input);
         }
@@ -129,7 +124,8 @@ namespace TestProject.Users
 
         protected override UserDto MapToEntityDto(User user)
         {
-            var roles = _roleManager.Roles.Where(r => user.Roles.Any(ur => ur.RoleId == r.Id)).Select(r => r.NormalizedName);
+            var roles = _roleManager.Roles.Where(r => user.Roles.Any(ur => ur.RoleId == r.Id))
+                .Select(r => r.NormalizedName);
             var userDto = base.MapToEntityDto(user);
             userDto.RoleNames = roles.ToArray();
             return userDto;
@@ -138,7 +134,9 @@ namespace TestProject.Users
         protected override IQueryable<User> CreateFilteredQuery(PagedUserResultRequestDto input)
         {
             return Repository.GetAllIncluding(x => x.Roles)
-                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.UserName.Contains(input.Keyword) || x.Name.Contains(input.Keyword) || x.EmailAddress.Contains(input.Keyword))
+                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(),
+                    x => x.UserName.Contains(input.Keyword) || x.Name.Contains(input.Keyword) ||
+                         x.EmailAddress.Contains(input.Keyword))
                 .WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive);
         }
 
@@ -146,10 +144,7 @@ namespace TestProject.Users
         {
             var user = await Repository.GetAllIncluding(x => x.Roles).FirstOrDefaultAsync(x => x.Id == id);
 
-            if (user == null)
-            {
-                throw new EntityNotFoundException(typeof(User), id);
-            }
+            if (user == null) throw new EntityNotFoundException(typeof(User), id);
 
             return user;
         }
@@ -167,20 +162,16 @@ namespace TestProject.Users
         public async Task<bool> ChangePassword(ChangePasswordDto input)
         {
             if (_abpSession.UserId == null)
-            {
                 throw new UserFriendlyException("Please log in before attemping to change password.");
-            }
-            long userId = _abpSession.UserId.Value;
+            var userId = _abpSession.UserId.Value;
             var user = await _userManager.GetUserByIdAsync(userId);
             var loginAsync = await _logInManager.LoginAsync(user.UserName, input.CurrentPassword, shouldLockout: false);
             if (loginAsync.Result != AbpLoginResultType.Success)
-            {
-                throw new UserFriendlyException("Your 'Existing Password' did not match the one on record.  Please try again or contact an administrator for assistance in resetting your password.");
-            }
+                throw new UserFriendlyException(
+                    "Your 'Existing Password' did not match the one on record.  Please try again or contact an administrator for assistance in resetting your password.");
             if (!new Regex(AccountAppService.PasswordRegex).IsMatch(input.NewPassword))
-            {
-                throw new UserFriendlyException("Passwords must be at least 8 characters, contain a lowercase, uppercase, and number.");
-            }
+                throw new UserFriendlyException(
+                    "Passwords must be at least 8 characters, contain a lowercase, uppercase, and number.");
             user.Password = _passwordHasher.HashPassword(user, input.NewPassword);
             CurrentUnitOfWork.SaveChanges();
             return true;
@@ -189,25 +180,18 @@ namespace TestProject.Users
         public async Task<bool> ResetPassword(ResetPasswordDto input)
         {
             if (_abpSession.UserId == null)
-            {
                 throw new UserFriendlyException("Please log in before attemping to reset password.");
-            }
-            long currentUserId = _abpSession.UserId.Value;
+            var currentUserId = _abpSession.UserId.Value;
             var currentUser = await _userManager.GetUserByIdAsync(currentUserId);
-            var loginAsync = await _logInManager.LoginAsync(currentUser.UserName, input.AdminPassword, shouldLockout: false);
+            var loginAsync =
+                await _logInManager.LoginAsync(currentUser.UserName, input.AdminPassword, shouldLockout: false);
             if (loginAsync.Result != AbpLoginResultType.Success)
-            {
-                throw new UserFriendlyException("Your 'Admin Password' did not match the one on record.  Please try again.");
-            }
-            if (currentUser.IsDeleted || !currentUser.IsActive)
-            {
-                return false;
-            }
+                throw new UserFriendlyException(
+                    "Your 'Admin Password' did not match the one on record.  Please try again.");
+            if (currentUser.IsDeleted || !currentUser.IsActive) return false;
             var roles = await _userManager.GetRolesAsync(currentUser);
             if (!roles.Contains(StaticRoleNames.Tenants.Admin))
-            {
                 throw new UserFriendlyException("Only administrators may reset passwords.");
-            }
 
             var user = await _userManager.GetUserByIdAsync(input.UserId);
             if (user != null)
@@ -218,7 +202,5 @@ namespace TestProject.Users
 
             return true;
         }
-
     }
 }
-

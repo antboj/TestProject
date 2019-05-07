@@ -1,5 +1,4 @@
-﻿
-namespace TestProject.DeviceAppService.Dto
+﻿namespace TestProject.DeviceAppService.Dto
 {
     public class PropertyValueDto
     {

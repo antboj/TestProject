@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using Abp.Domain.Repositories;
@@ -11,12 +10,14 @@ namespace TestProject.DeviceTypeAppService
 {
     public class DeviceTypeAppService : TestProjectAppServiceBase, IDeviceTypeAppService
     {
-        private readonly IRepository<DeviceType> _deviceTypeRepository;
-        private readonly IRepository<DeviceTypeProperty> _deviceTypePropertyRepository;
-        private readonly IRepository<Device> _deviceRepository;
         private readonly IRepository<DevicePropertyValue> _devicePropertyValueRepository;
+        private readonly IRepository<Device> _deviceRepository;
+        private readonly IRepository<DeviceTypeProperty> _deviceTypePropertyRepository;
+        private readonly IRepository<DeviceType> _deviceTypeRepository;
 
-        public DeviceTypeAppService(IRepository<DeviceType> deviceTypeRepository, IRepository<DeviceTypeProperty> deviceTypePropertyRepository, IRepository<Device> deviceRepository, IRepository<DevicePropertyValue> devicePropertyValueRepository)
+        public DeviceTypeAppService(IRepository<DeviceType> deviceTypeRepository,
+            IRepository<DeviceTypeProperty> deviceTypePropertyRepository, IRepository<Device> deviceRepository,
+            IRepository<DevicePropertyValue> devicePropertyValueRepository)
         {
             _deviceTypeRepository = deviceTypeRepository;
             _deviceTypePropertyRepository = deviceTypePropertyRepository;
@@ -25,7 +26,7 @@ namespace TestProject.DeviceTypeAppService
         }
 
         /// <summary>
-        /// Return all DeviceTypes
+        ///     Return all DeviceTypes
         /// </summary>
         /// <param name="parentId"></param>
         /// <returns></returns>
@@ -54,7 +55,7 @@ namespace TestProject.DeviceTypeAppService
         }
 
         /// <summary>
-        /// Return all DeviceTypes include Properties
+        ///     Return all DeviceTypes include Properties
         /// </summary>
         /// <param name="deviceTypeId"></param>
         /// <returns></returns>
@@ -65,7 +66,7 @@ namespace TestProject.DeviceTypeAppService
 
             var result = new List<DeviceTypePropertiesNestedDto>();
 
-            var currentType = new DeviceTypePropertiesNestedDto()
+            var currentType = new DeviceTypePropertiesNestedDto
             {
                 Id = allDeviceTypes.Id,
                 Name = allDeviceTypes.Name,
@@ -87,8 +88,8 @@ namespace TestProject.DeviceTypeAppService
         }
 
         /// <summary>
-        /// Insert or Update DeviceType
-        /// Return all DeviceTypes
+        ///     Insert or Update DeviceType
+        ///     Return all DeviceTypes
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -115,7 +116,7 @@ namespace TestProject.DeviceTypeAppService
         }
 
         /// <summary>
-        /// Insert DeviceTypeProperties for new DeviceType
+        ///     Insert DeviceTypeProperties for new DeviceType
         /// </summary>
         /// <param name="input"></param>
         public void CreateDeviceTypeProperties(DeviceTypePropertiesCreateDto input)
@@ -124,7 +125,6 @@ namespace TestProject.DeviceTypeAppService
                 .First(x => x.Id == input.Id);
 
             foreach (var property in input.Properties)
-            {
                 _deviceTypePropertyRepository.Insert(new DeviceTypeProperty
                 {
                     Name = property.NameProperty,
@@ -132,11 +132,10 @@ namespace TestProject.DeviceTypeAppService
                     Type = property.Type,
                     DeviceTypeId = deviceType.Id
                 });
-            }
         }
 
         /// <summary>
-        /// Get DeviceType with all children
+        ///     Get DeviceType with all children
         /// </summary>
         /// <param name="parentId"></param>
         /// <returns></returns>
@@ -158,18 +157,14 @@ namespace TestProject.DeviceTypeAppService
                 return list;
             }
 
-            foreach (var child in children)
-            {
-                list.AddRange(GetDeviceTypeWithChildren(child.Id));
-            }
+            foreach (var child in children) list.AddRange(GetDeviceTypeWithChildren(child.Id));
 
             list.Add(type);
             return list;
-
         }
 
         /// <summary>
-        /// Return all DeviceTypes for specific DeviceType
+        ///     Return all DeviceTypes for specific DeviceType
         /// </summary>
         /// <param name="deviceTypeId"></param>
         /// <returns></returns>
@@ -198,7 +193,7 @@ namespace TestProject.DeviceTypeAppService
         }
 
         /// <summary>
-        /// Return all properties for DeviceType
+        ///     Return all properties for DeviceType
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -209,18 +204,14 @@ namespace TestProject.DeviceTypeAppService
             var allDeviceTypes = GetDeviceTypesFlatList(id);
 
             foreach (var deviceType in allDeviceTypes)
-            {
-                foreach (var prop in deviceType.DeviceTypeProperties)
-                {
-                    allProperties.Add(prop);
-                }
-            }
+            foreach (var prop in deviceType.DeviceTypeProperties)
+                allProperties.Add(prop);
 
             return allProperties;
         }
 
         /// <summary>
-        /// Return All Devices
+        ///     Return All Devices
         /// </summary>
         /// <param name="typeId"></param>
         /// <returns></returns>
@@ -239,26 +230,20 @@ namespace TestProject.DeviceTypeAppService
 
                 foreach (var prop in allProperties)
                 {
-                    if (!device.DeviceTypeValues.Any())
-                    {
-                        sampleDevice.Add(prop.NameProperty, null);
-                    }
+                    if (!device.DeviceTypeValues.Any()) sampleDevice.Add(prop.NameProperty, null);
                     foreach (var val in device.DeviceTypeValues)
-                    {
                         if (val.DeviceTypePropertyId == prop.Id)
-                        {
                             sampleDevice.Add(prop.NameProperty, val.Value);
-                        }
-                    }
                 }
 
                 allDevicesList.Add((ExpandoObject) sampleDevice);
             }
+
             return allDevicesList;
         }
 
         /// <summary>
-        /// Delete Type and all children types
+        ///     Delete Type and all children types
         /// </summary>
         /// <param name="id"></param>
         public void DeleteDeviceType(int id)
@@ -271,11 +256,10 @@ namespace TestProject.DeviceTypeAppService
                 foreach (var currentDevice in currentType.Devices)
                 {
                     foreach (var propValue in currentDevice.DeviceTypeValues)
-                    {
                         _devicePropertyValueRepository.Delete(propValue);
-                    }
                     _deviceRepository.Delete(currentDevice);
                 }
+
                 _deviceTypeRepository.Delete(currentType);
             }
         }

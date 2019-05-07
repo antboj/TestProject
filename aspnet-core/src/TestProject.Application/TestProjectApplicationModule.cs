@@ -9,7 +9,7 @@ using TestProject.Models;
 namespace TestProject
 {
     [DependsOn(
-        typeof(TestProjectCoreModule), 
+        typeof(TestProjectCoreModule),
         typeof(AbpAutoMapperModule))]
     public class TestProjectApplicationModule : AbpModule
     {

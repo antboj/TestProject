@@ -10,7 +10,8 @@ namespace TestProject.Configuration
     {
         public async Task ChangeUiTheme(ChangeUiThemeInput input)
         {
-            await SettingManager.ChangeSettingForUserAsync(AbpSession.ToUserIdentifier(), AppSettingNames.UiTheme, input.Theme);
+            await SettingManager.ChangeSettingForUserAsync(AbpSession.ToUserIdentifier(), AppSettingNames.UiTheme,
+                input.Theme);
         }
     }
 }

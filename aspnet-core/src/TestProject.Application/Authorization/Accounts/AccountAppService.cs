@@ -9,7 +9,8 @@ namespace TestProject.Authorization.Accounts
     public class AccountAppService : TestProjectAppServiceBase, IAccountAppService
     {
         // from: http://regexlib.com/REDetails.aspx?regexp_id=1923
-        public const string PasswordRegex = "(?=^.{8,}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s)[0-9a-zA-Z!@#$%^&*()]*$";
+        public const string PasswordRegex =
+            "(?=^.{8,}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s)[0-9a-zA-Z!@#$%^&*()]*$";
 
         private readonly UserRegistrationManager _userRegistrationManager;
 
@@ -22,15 +23,9 @@ namespace TestProject.Authorization.Accounts
         public async Task<IsTenantAvailableOutput> IsTenantAvailable(IsTenantAvailableInput input)
         {
             var tenant = await TenantManager.FindByTenancyNameAsync(input.TenancyName);
-            if (tenant == null)
-            {
-                return new IsTenantAvailableOutput(TenantAvailabilityState.NotFound);
-            }
+            if (tenant == null) return new IsTenantAvailableOutput(TenantAvailabilityState.NotFound);
 
-            if (!tenant.IsActive)
-            {
-                return new IsTenantAvailableOutput(TenantAvailabilityState.InActive);
-            }
+            if (!tenant.IsActive) return new IsTenantAvailableOutput(TenantAvailabilityState.InActive);
 
             return new IsTenantAvailableOutput(TenantAvailabilityState.Available, tenant.Id);
         }
@@ -46,7 +41,9 @@ namespace TestProject.Authorization.Accounts
                 true // Assumed email address is always confirmed. Change this if you want to implement email confirmation.
             );
 
-            var isEmailConfirmationRequiredForLogin = await SettingManager.GetSettingValueAsync<bool>(AbpZeroSettingNames.UserManagement.IsEmailConfirmationRequiredForLogin);
+            var isEmailConfirmationRequiredForLogin =
+                await SettingManager.GetSettingValueAsync<bool>(AbpZeroSettingNames.UserManagement
+                    .IsEmailConfirmationRequiredForLogin);
 
             return new RegisterOutput
             {

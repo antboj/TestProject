@@ -7,16 +7,16 @@ namespace TestProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Surname",
-                table: "AbpUsers",
+                "Surname",
+                "AbpUsers",
                 maxLength: 64,
                 nullable: false,
                 oldClrType: typeof(string),
                 oldMaxLength: 32);
 
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "AbpUsers",
+                "Name",
+                "AbpUsers",
                 maxLength: 64,
                 nullable: false,
                 oldClrType: typeof(string),
@@ -26,16 +26,16 @@ namespace TestProject.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Surname",
-                table: "AbpUsers",
+                "Surname",
+                "AbpUsers",
                 maxLength: 32,
                 nullable: false,
                 oldClrType: typeof(string),
                 oldMaxLength: 64);
 
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "AbpUsers",
+                "Name",
+                "AbpUsers",
                 maxLength: 32,
                 nullable: false,
                 oldClrType: typeof(string),

@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using Abp.Authorization;
+﻿using Abp.Authorization;
 using Abp.Authorization.Roles;
+using AutoMapper;
 using TestProject.Authorization.Roles;
 
 namespace TestProject.Roles.Dto

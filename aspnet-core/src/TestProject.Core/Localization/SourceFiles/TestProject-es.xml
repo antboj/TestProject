@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <localizationDictionary culture="es">
   <texts>
     <text name="HomePage" value="Página de inicio" />
@@ -33,12 +34,14 @@
     <text name="AdminEmailAddress" value="Dirección de correo electrónico del administrador" />
     <text name="Save" value="Guardar" />
     <text name="Cancel" value="Cancelar" />
-    <text name="TenantName_Regex_Description" value="El nombre de la empresa debe ser de al menos 2 caracteres, empieza con una letra y continua con una letra, número, guión o un guión bajo." />
+    <text name="TenantName_Regex_Description"
+          value="El nombre de la empresa debe ser de al menos 2 caracteres, empieza con una letra y continua con una letra, número, guión o un guión bajo." />
     <text name="DefaultPasswordIs" value="La contraseña por defecto es {0}" />
     <text name="CanBeEmptyToLoginAsHost" value="Puede estar vacía para iniciar la sesión como anfitrión." />
     <text name="Register" value="Registro" />
     <text name="OrLoginWith" value="o iniciar sesión con" />
-    <text name="WaitingForActivationMessage" value="Su cuenta está en espera de ser activada por el administrador del sistema." />
+    <text name="WaitingForActivationMessage"
+          value="Su cuenta está en espera de ser activada por el administrador del sistema." />
     <text name="TenantSelection" value="Selección de Empresa" />
     <text name="TenantSelection_Detail" value="Por favor seleccione una de las siguientes empresas." />
     <text name="Logout" value="Cerrar sesión" />

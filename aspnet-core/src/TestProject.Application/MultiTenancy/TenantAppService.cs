@@ -9,23 +9,25 @@ using Abp.IdentityFramework;
 using Abp.Linq.Extensions;
 using Abp.MultiTenancy;
 using Abp.Runtime.Security;
+using Microsoft.AspNetCore.Identity;
 using TestProject.Authorization;
 using TestProject.Authorization.Roles;
 using TestProject.Authorization.Users;
 using TestProject.Editions;
 using TestProject.MultiTenancy.Dto;
-using Microsoft.AspNetCore.Identity;
 
 namespace TestProject.MultiTenancy
 {
     [AbpAuthorize(PermissionNames.Pages_Tenants)]
-    public class TenantAppService : AsyncCrudAppService<Tenant, TenantDto, int, PagedTenantResultRequestDto, CreateTenantDto, TenantDto>, ITenantAppService
+    public class TenantAppService :
+        AsyncCrudAppService<Tenant, TenantDto, int, PagedTenantResultRequestDto, CreateTenantDto, TenantDto>,
+        ITenantAppService
     {
-        private readonly TenantManager _tenantManager;
-        private readonly EditionManager _editionManager;
-        private readonly UserManager _userManager;
-        private readonly RoleManager _roleManager;
         private readonly IAbpZeroDbMigrator _abpZeroDbMigrator;
+        private readonly EditionManager _editionManager;
+        private readonly RoleManager _roleManager;
+        private readonly TenantManager _tenantManager;
+        private readonly UserManager _userManager;
 
         public TenantAppService(
             IRepository<Tenant, int> repository,
@@ -54,10 +56,7 @@ namespace TestProject.MultiTenancy
                 : SimpleStringCipher.Instance.Encrypt(input.ConnectionString);
 
             var defaultEdition = await _editionManager.FindByNameAsync(EditionManager.DefaultEditionName);
-            if (defaultEdition != null)
-            {
-                tenant.EditionId = defaultEdition.Id;
-            }
+            if (defaultEdition != null) tenant.EditionId = defaultEdition.Id;
 
             await _tenantManager.CreateAsync(tenant);
             await CurrentUnitOfWork.SaveChangesAsync(); // To get new tenant's id.
@@ -91,10 +90,19 @@ namespace TestProject.MultiTenancy
             return MapToEntityDto(tenant);
         }
 
+        public override async Task Delete(EntityDto<int> input)
+        {
+            CheckDeletePermission();
+
+            var tenant = await _tenantManager.GetByIdAsync(input.Id);
+            await _tenantManager.DeleteAsync(tenant);
+        }
+
         protected override IQueryable<Tenant> CreateFilteredQuery(PagedTenantResultRequestDto input)
         {
             return Repository.GetAll()
-                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.TenancyName.Contains(input.Keyword) || x.Name.Contains(input.Keyword))
+                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(),
+                    x => x.TenancyName.Contains(input.Keyword) || x.Name.Contains(input.Keyword))
                 .WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive);
         }
 
@@ -106,18 +114,9 @@ namespace TestProject.MultiTenancy
             entity.IsActive = updateInput.IsActive;
         }
 
-        public override async Task Delete(EntityDto<int> input)
-        {
-            CheckDeletePermission();
-
-            var tenant = await _tenantManager.GetByIdAsync(input.Id);
-            await _tenantManager.DeleteAsync(tenant);
-        }
-
         private void CheckErrors(IdentityResult identityResult)
         {
             identityResult.CheckErrors(LocalizationManager);
         }
     }
 }
-

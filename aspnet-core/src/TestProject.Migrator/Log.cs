@@ -1,18 +1,18 @@
 using System;
-using Castle.Core.Logging;
 using Abp.Dependency;
 using Abp.Timing;
+using Castle.Core.Logging;
 
 namespace TestProject.Migrator
 {
     public class Log : ITransientDependency
     {
-        public ILogger Logger { get; set; }
-
         public Log()
         {
             Logger = NullLogger.Instance;
         }
+
+        public ILogger Logger { get; set; }
 
         public void Write(string text)
         {

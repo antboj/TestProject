@@ -8,11 +8,12 @@ namespace TestProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "DeviceTypes",
-                columns: table => new
+                "DeviceTypes",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 255, nullable: false),
                     Description = table.Column<string>(nullable: true),
                     ParentId = table.Column<int>(nullable: true)
@@ -21,19 +22,20 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_DeviceTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DeviceTypes_DeviceTypes_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "DeviceTypes",
-                        principalColumn: "Id",
+                        "FK_DeviceTypes_DeviceTypes_ParentId",
+                        x => x.ParentId,
+                        "DeviceTypes",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Devices",
-                columns: table => new
+                "Devices",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 255, nullable: false),
                     Description = table.Column<string>(nullable: true),
                     DeviceTypeId = table.Column<int>(nullable: false)
@@ -42,19 +44,20 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_Devices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Devices_DeviceTypes_DeviceTypeId",
-                        column: x => x.DeviceTypeId,
-                        principalTable: "DeviceTypes",
-                        principalColumn: "Id",
+                        "FK_Devices_DeviceTypes_DeviceTypeId",
+                        x => x.DeviceTypeId,
+                        "DeviceTypes",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DeviceTypeProperties",
-                columns: table => new
+                "DeviceTypeProperties",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 255, nullable: false),
                     DeviceTypeId = table.Column<int>(nullable: false),
                     Type = table.Column<string>(nullable: true),
@@ -65,19 +68,20 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_DeviceTypeProperties", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DeviceTypeProperties_DeviceTypes_DeviceTypeId",
-                        column: x => x.DeviceTypeId,
-                        principalTable: "DeviceTypes",
-                        principalColumn: "Id",
+                        "FK_DeviceTypeProperties_DeviceTypes_DeviceTypeId",
+                        x => x.DeviceTypeId,
+                        "DeviceTypes",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DevicePropertyValues",
-                columns: table => new
+                "DevicePropertyValues",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     DeviceTypePropertyId = table.Column<int>(nullable: false),
                     DeviceId = table.Column<int>(nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -86,58 +90,58 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_DevicePropertyValues", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DevicePropertyValues_Devices_DeviceId",
-                        column: x => x.DeviceId,
-                        principalTable: "Devices",
-                        principalColumn: "Id",
+                        "FK_DevicePropertyValues_Devices_DeviceId",
+                        x => x.DeviceId,
+                        "Devices",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DevicePropertyValues_DeviceTypeProperties_DeviceTypePropertyId",
-                        column: x => x.DeviceTypePropertyId,
-                        principalTable: "DeviceTypeProperties",
-                        principalColumn: "Id",
+                        "FK_DevicePropertyValues_DeviceTypeProperties_DeviceTypePropertyId",
+                        x => x.DeviceTypePropertyId,
+                        "DeviceTypeProperties",
+                        "Id",
                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DevicePropertyValues_DeviceId",
-                table: "DevicePropertyValues",
-                column: "DeviceId");
+                "IX_DevicePropertyValues_DeviceId",
+                "DevicePropertyValues",
+                "DeviceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DevicePropertyValues_DeviceTypePropertyId",
-                table: "DevicePropertyValues",
-                column: "DeviceTypePropertyId");
+                "IX_DevicePropertyValues_DeviceTypePropertyId",
+                "DevicePropertyValues",
+                "DeviceTypePropertyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Devices_DeviceTypeId",
-                table: "Devices",
-                column: "DeviceTypeId");
+                "IX_Devices_DeviceTypeId",
+                "Devices",
+                "DeviceTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeviceTypeProperties_DeviceTypeId",
-                table: "DeviceTypeProperties",
-                column: "DeviceTypeId");
+                "IX_DeviceTypeProperties_DeviceTypeId",
+                "DeviceTypeProperties",
+                "DeviceTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeviceTypes_ParentId",
-                table: "DeviceTypes",
-                column: "ParentId");
+                "IX_DeviceTypes_ParentId",
+                "DeviceTypes",
+                "ParentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DevicePropertyValues");
+                "DevicePropertyValues");
 
             migrationBuilder.DropTable(
-                name: "Devices");
+                "Devices");
 
             migrationBuilder.DropTable(
-                name: "DeviceTypeProperties");
+                "DeviceTypeProperties");
 
             migrationBuilder.DropTable(
-                name: "DeviceTypes");
+                "DeviceTypes");
         }
     }
 }

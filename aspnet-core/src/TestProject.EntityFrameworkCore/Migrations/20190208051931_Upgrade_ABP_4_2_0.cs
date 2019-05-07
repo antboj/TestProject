@@ -9,24 +9,25 @@ namespace TestProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "LastLoginTime",
-                table: "AbpUsers");
+                "LastLoginTime",
+                "AbpUsers");
 
             migrationBuilder.DropColumn(
-                name: "LastLoginTime",
-                table: "AbpUserAccounts");
+                "LastLoginTime",
+                "AbpUserAccounts");
 
             migrationBuilder.AddColumn<string>(
-                name: "ReturnValue",
-                table: "AbpAuditLogs",
+                "ReturnValue",
+                "AbpAuditLogs",
                 nullable: true);
 
             migrationBuilder.CreateTable(
-                name: "AbpOrganizationUnitRoles",
-                columns: table => new
+                "AbpOrganizationUnitRoles",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
                     TenantId = table.Column<int>(nullable: true),
@@ -34,39 +35,36 @@ namespace TestProject.Migrations
                     OrganizationUnitId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpOrganizationUnitRoles", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AbpOrganizationUnitRoles", x => x.Id); });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpOrganizationUnitRoles_TenantId_OrganizationUnitId",
-                table: "AbpOrganizationUnitRoles",
-                columns: new[] { "TenantId", "OrganizationUnitId" });
+                "IX_AbpOrganizationUnitRoles_TenantId_OrganizationUnitId",
+                "AbpOrganizationUnitRoles",
+                new[] {"TenantId", "OrganizationUnitId"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpOrganizationUnitRoles_TenantId_RoleId",
-                table: "AbpOrganizationUnitRoles",
-                columns: new[] { "TenantId", "RoleId" });
+                "IX_AbpOrganizationUnitRoles_TenantId_RoleId",
+                "AbpOrganizationUnitRoles",
+                new[] {"TenantId", "RoleId"});
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AbpOrganizationUnitRoles");
+                "AbpOrganizationUnitRoles");
 
             migrationBuilder.DropColumn(
-                name: "ReturnValue",
-                table: "AbpAuditLogs");
+                "ReturnValue",
+                "AbpAuditLogs");
 
             migrationBuilder.AddColumn<DateTime>(
-                name: "LastLoginTime",
-                table: "AbpUsers",
+                "LastLoginTime",
+                "AbpUsers",
                 nullable: true);
 
             migrationBuilder.AddColumn<DateTime>(
-                name: "LastLoginTime",
-                table: "AbpUserAccounts",
+                "LastLoginTime",
+                "AbpUserAccounts",
                 nullable: true);
         }
     }

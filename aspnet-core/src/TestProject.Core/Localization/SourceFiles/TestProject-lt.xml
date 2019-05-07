@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <localizationDictionary culture="lt">
   <texts>
     <text name="HomePage" value="Pagrindinis" />
@@ -35,7 +36,8 @@
     <text name="AdminEmailAddress" value="Administratoriaus el. pašto adresas" />
     <text name="Save" value="Išsaugoti" />
     <text name="Cancel" value="Atšaukti" />
-    <text name="TenantName_Regex_Description" value="Savininko pavadinimas privalo būti bent 2 simboliai, prasidėti su raide, skaičiumi, brūkšneliu ar pabraukimu." />
+    <text name="TenantName_Regex_Description"
+          value="Savininko pavadinimas privalo būti bent 2 simboliai, prasidėti su raide, skaičiumi, brūkšneliu ar pabraukimu." />
     <text name="DefaultPasswordIs" value="Slaptažodis pagal nutylėjimą yra {0}" />
     <text name="CanBeEmptyToLoginAsHost" value="Gali būti tuščia prisijungimui šeimininku." />
     <text name="Register" value="Registruotis" />
@@ -84,8 +86,8 @@
     <text name="EditUser">Keisti vartotoją</text>
     <text name="TenantIdIsNotActive{0}">Savininkas su Id {0} yra neaktyvus</text>
     <text name="UnknownTenantId{0}">Nežinomas savininko Id {0}</text>
-	
-	<text name="ThisFieldIsRequired">Šis laukas yra privalomas</text>
+
+    <text name="ThisFieldIsRequired">Šis laukas yra privalomas</text>
     <text name="PleaseWait">Prašome palaukti...</text>
     <text name="Administration">Administration</text>
     <text name="ClearAll">Išvalyti visus</text>
@@ -104,6 +106,6 @@
     <text name="AreYouSureWantToDelete">Ar tikrai norite pašalinti {0}?</text>
     <text name="StartTyping">Pradėkite rašyti</text>
     <text name="Skins">Apvalkalai</text>
-	<text name="Settings">Nustatymai</text>
+    <text name="Settings">Nustatymai</text>
   </texts>
 </localizationDictionary>

@@ -7,14 +7,14 @@ namespace TestProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Description",
-                table: "AbpRoles",
+                "Description",
+                "AbpRoles",
                 maxLength: 5000,
                 nullable: true);
 
             migrationBuilder.AddColumn<bool>(
-                name: "IsActive",
-                table: "AbpRoles",
+                "IsActive",
+                "AbpRoles",
                 nullable: false,
                 defaultValue: false);
         }
@@ -22,12 +22,12 @@ namespace TestProject.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Description",
-                table: "AbpRoles");
+                "Description",
+                "AbpRoles");
 
             migrationBuilder.DropColumn(
-                name: "IsActive",
-                table: "AbpRoles");
+                "IsActive",
+                "AbpRoles");
         }
     }
 }

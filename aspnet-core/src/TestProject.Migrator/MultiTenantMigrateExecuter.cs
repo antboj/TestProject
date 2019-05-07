@@ -16,10 +16,10 @@ namespace TestProject.Migrator
 {
     public class MultiTenantMigrateExecuter : ITransientDependency
     {
+        private readonly IDbPerTenantConnectionStringResolver _connectionStringResolver;
         private readonly Log _log;
         private readonly AbpZeroDbMigrator _migrator;
         private readonly IRepository<Tenant> _tenantRepository;
-        private readonly IDbPerTenantConnectionStringResolver _connectionStringResolver;
 
         public MultiTenantMigrateExecuter(
             AbpZeroDbMigrator migrator,
@@ -36,7 +36,10 @@ namespace TestProject.Migrator
 
         public bool Run(bool skipConnVerification)
         {
-            var hostConnStr = CensorConnectionString(_connectionStringResolver.GetNameOrConnectionString(new ConnectionStringResolveArgs(MultiTenancySides.Host)));
+            var hostConnStr =
+                CensorConnectionString(
+                    _connectionStringResolver.GetNameOrConnectionString(
+                        new ConnectionStringResolveArgs(MultiTenancySides.Host)));
             if (hostConnStr.IsNullOrWhiteSpace())
             {
                 _log.Write("Configuration file should contain a connection string named 'Default'");
@@ -77,7 +80,7 @@ namespace TestProject.Migrator
             for (var i = 0; i < tenants.Count; i++)
             {
                 var tenant = tenants[i];
-                _log.Write(string.Format("Tenant database migration started... ({0} / {1})", (i + 1), tenants.Count));
+                _log.Write(string.Format("Tenant database migration started... ({0} / {1})", i + 1, tenants.Count));
                 _log.Write("Name              : " + tenant.Name);
                 _log.Write("TenancyName       : " + tenant.TenancyName);
                 _log.Write("Tenant Id         : " + tenant.Id);
@@ -100,10 +103,11 @@ namespace TestProject.Migrator
                 }
                 else
                 {
-                    _log.Write("This database has already migrated before (you have more than one tenant in same database). Skipping it....");
+                    _log.Write(
+                        "This database has already migrated before (you have more than one tenant in same database). Skipping it....");
                 }
 
-                _log.Write(string.Format("Tenant database migration completed. ({0} / {1})", (i + 1), tenants.Count));
+                _log.Write(string.Format("Tenant database migration completed. ({0} / {1})", i + 1, tenants.Count));
                 _log.Write("--------------------------------------------------------");
             }
 
@@ -114,16 +118,12 @@ namespace TestProject.Migrator
 
         private static string CensorConnectionString(string connectionString)
         {
-            var builder = new DbConnectionStringBuilder { ConnectionString = connectionString };
-            var keysToMask = new[] { "password", "pwd", "user id", "uid" };
+            var builder = new DbConnectionStringBuilder {ConnectionString = connectionString};
+            var keysToMask = new[] {"password", "pwd", "user id", "uid"};
 
             foreach (var key in keysToMask)
-            {
                 if (builder.ContainsKey(key))
-                {
                     builder[key] = "*****";
-                }
-            }
 
             return builder.ToString();
         }

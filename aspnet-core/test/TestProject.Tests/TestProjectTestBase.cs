@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Abp;
 using Abp.Authorization.Users;
 using Abp.Events.Bus;
@@ -9,6 +8,7 @@ using Abp.Events.Bus.Entities;
 using Abp.MultiTenancy;
 using Abp.Runtime.Session;
 using Abp.TestBase;
+using Microsoft.EntityFrameworkCore;
 using TestProject.Authorization.Users;
 using TestProject.EntityFrameworkCore;
 using TestProject.EntityFrameworkCore.Seed.Host;
@@ -46,6 +46,26 @@ namespace TestProject.Tests
             });
 
             LoginAsDefaultTenantAdmin();
+        }
+
+        /// <summary>
+        ///     Gets current user if <see cref="IAbpSession.UserId" /> is not null.
+        ///     Throws exception if it's null.
+        /// </summary>
+        protected async Task<User> GetCurrentUserAsync()
+        {
+            var userId = AbpSession.GetUserId();
+            return await UsingDbContext(context => context.Users.SingleAsync(u => u.Id == userId));
+        }
+
+        /// <summary>
+        ///     Gets current tenant if <see cref="IAbpSession.TenantId" /> is not null.
+        ///     Throws exception if there is no current tenant.
+        /// </summary>
+        protected async Task<Tenant> GetCurrentTenantAsync()
+        {
+            var tenantId = AbpSession.GetTenantId();
+            return await UsingDbContext(context => context.Tenants.SingleAsync(t => t.Id == tenantId));
         }
 
         #region UsingDbContext
@@ -155,10 +175,7 @@ namespace TestProject.Tests
                 UsingDbContext(
                     context =>
                         context.Users.FirstOrDefault(u => u.TenantId == AbpSession.TenantId && u.UserName == userName));
-            if (user == null)
-            {
-                throw new Exception("There is no user: " + userName + " for host.");
-            }
+            if (user == null) throw new Exception("There is no user: " + userName + " for host.");
 
             AbpSession.UserId = user.Id;
         }
@@ -166,10 +183,7 @@ namespace TestProject.Tests
         protected void LoginAsTenant(string tenancyName, string userName)
         {
             var tenant = UsingDbContext(context => context.Tenants.FirstOrDefault(t => t.TenancyName == tenancyName));
-            if (tenant == null)
-            {
-                throw new Exception("There is no tenant: " + tenancyName);
-            }
+            if (tenant == null) throw new Exception("There is no tenant: " + tenancyName);
 
             AbpSession.TenantId = tenant.Id;
 
@@ -177,34 +191,11 @@ namespace TestProject.Tests
                 UsingDbContext(
                     context =>
                         context.Users.FirstOrDefault(u => u.TenantId == AbpSession.TenantId && u.UserName == userName));
-            if (user == null)
-            {
-                throw new Exception("There is no user: " + userName + " for tenant: " + tenancyName);
-            }
+            if (user == null) throw new Exception("There is no user: " + userName + " for tenant: " + tenancyName);
 
             AbpSession.UserId = user.Id;
         }
 
         #endregion
-
-        /// <summary>
-        /// Gets current user if <see cref="IAbpSession.UserId"/> is not null.
-        /// Throws exception if it's null.
-        /// </summary>
-        protected async Task<User> GetCurrentUserAsync()
-        {
-            var userId = AbpSession.GetUserId();
-            return await UsingDbContext(context => context.Users.SingleAsync(u => u.Id == userId));
-        }
-
-        /// <summary>
-        /// Gets current tenant if <see cref="IAbpSession.TenantId"/> is not null.
-        /// Throws exception if there is no current tenant.
-        /// </summary>
-        protected async Task<Tenant> GetCurrentTenantAsync()
-        {
-            var tenantId = AbpSession.GetTenantId();
-            return await UsingDbContext(context => context.Tenants.SingleAsync(t => t.Id == tenantId));
-        }
     }
 }
