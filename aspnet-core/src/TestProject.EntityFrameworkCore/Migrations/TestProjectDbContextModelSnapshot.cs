@@ -589,6 +589,37 @@ namespace TestProject.Migrations
                     b.ToTable("AbpEntityPropertyChanges");
                 });
 
+            modelBuilder.Entity("Abp.IdentityServer4.PersistedGrantEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasMaxLength(50000);
+
+                    b.Property<DateTime?>("Expiration");
+
+                    b.Property<string>("SubjectId")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubjectId", "ClientId", "Type");
+
+                    b.ToTable("AbpPersistedGrants");
+                });
+
             modelBuilder.Entity("Abp.Localization.ApplicationLanguage", b =>
                 {
                     b.Property<int>("Id")

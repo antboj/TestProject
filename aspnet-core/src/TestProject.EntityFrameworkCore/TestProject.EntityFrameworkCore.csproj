@@ -14,7 +14,11 @@
     <Compile Remove="Migrations\20190403140105_Prva.cs" />
     <Compile Remove="Migrations\20190404082726_druga.cs" />
     <Compile Remove="Migrations\20190404132443_Prva.cs" />
+    <Compile Remove="Migrations\20190410201856_First.cs" />
     <Compile Remove="Migrations\20190507075858_AddedPersistedGrants.cs" />
+    <Compile Remove="Migrations\20190507125159_Second.cs" />
+    <Compile Remove="Migrations\20190507125418_Second.cs" />
+    <Compile Remove="Migrations\20190507125712_First.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Abp.ZeroCore.IdentityServer4.EntityFrameworkCore" Version="4.3.0" />

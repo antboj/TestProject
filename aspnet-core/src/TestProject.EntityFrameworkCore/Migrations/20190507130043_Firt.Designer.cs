@@ -10,8 +10,8 @@ using TestProject.EntityFrameworkCore;
 namespace TestProject.Migrations
 {
     [DbContext(typeof(TestProjectDbContext))]
-    [Migration("20190410201856_First")]
-    partial class First
+    [Migration("20190507130043_Firt")]
+    partial class Firt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -589,6 +589,37 @@ namespace TestProject.Migrations
                     b.HasIndex("EntityChangeId");
 
                     b.ToTable("AbpEntityPropertyChanges");
+                });
+
+            modelBuilder.Entity("Abp.IdentityServer4.PersistedGrantEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasMaxLength(50000);
+
+                    b.Property<DateTime?>("Expiration");
+
+                    b.Property<string>("SubjectId")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubjectId", "ClientId", "Type");
+
+                    b.ToTable("AbpPersistedGrants");
                 });
 
             modelBuilder.Entity("Abp.Localization.ApplicationLanguage", b =>
