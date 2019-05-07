@@ -7,8 +7,8 @@ namespace TestProject.Authentication.External
 {
     public class ExternalAuthManager : IExternalAuthManager, ITransientDependency
     {
-        private readonly IIocResolver _iocResolver;
         private readonly IExternalAuthConfiguration _externalAuthConfiguration;
+        private readonly IIocResolver _iocResolver;
 
         public ExternalAuthManager(IIocResolver iocResolver, IExternalAuthConfiguration externalAuthConfiguration)
         {
@@ -35,10 +35,7 @@ namespace TestProject.Authentication.External
         public IDisposableDependencyObjectWrapper<IExternalAuthProviderApi> CreateProviderApi(string provider)
         {
             var providerInfo = _externalAuthConfiguration.Providers.FirstOrDefault(p => p.Name == provider);
-            if (providerInfo == null)
-            {
-                throw new Exception("Unknown external auth provider: " + provider);
-            }
+            if (providerInfo == null) throw new Exception("Unknown external auth provider: " + provider);
 
             var providerApi = _iocResolver.ResolveAsDisposable<IExternalAuthProviderApi>(providerInfo.ProviderApiType);
             providerApi.Object.Initialize(providerInfo);

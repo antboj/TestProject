@@ -14,7 +14,8 @@ namespace TestProject.EntityFrameworkCore
             var builder = new DbContextOptionsBuilder<TestProjectDbContext>();
             var configuration = AppConfigurations.Get(WebContentDirectoryFinder.CalculateContentRootFolder());
 
-            TestProjectDbContextConfigurer.Configure(builder, configuration.GetConnectionString(TestProjectConsts.ConnectionStringName));
+            TestProjectDbContextConfigurer.Configure(builder,
+                configuration.GetConnectionString(TestProjectConsts.ConnectionStringName));
 
             return new TestProjectDbContext(builder.Options);
         }

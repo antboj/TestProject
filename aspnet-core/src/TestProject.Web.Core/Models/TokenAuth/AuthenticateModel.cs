@@ -12,7 +12,7 @@ namespace TestProject.Models.TokenAuth
         [Required]
         [StringLength(AbpUserBase.MaxPlainPasswordLength)]
         public string Password { get; set; }
-        
+
         public bool RememberClient { get; set; }
     }
 }

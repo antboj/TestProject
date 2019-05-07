@@ -22,7 +22,6 @@ namespace TestProject.Authorization.Roles
         {
         }
 
-        [StringLength(MaxDescriptionLength)]
-        public string Description {get; set;}
+        [StringLength(MaxDescriptionLength)] public string Description { get; set; }
     }
 }

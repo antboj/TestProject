@@ -7,4 +7,3 @@ namespace TestProject.Roles.Dto
         public string Keyword { get; set; }
     }
 }
-

@@ -8,17 +8,18 @@ using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.IdentityFramework;
 using Abp.Linq.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TestProject.Authorization;
 using TestProject.Authorization.Roles;
 using TestProject.Authorization.Users;
 using TestProject.Roles.Dto;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace TestProject.Roles
 {
     [AbpAuthorize(PermissionNames.Pages_Roles)]
-    public class RoleAppService : AsyncCrudAppService<Role, RoleDto, int, PagedRoleResultRequestDto, CreateRoleDto, RoleDto>, IRoleAppService
+    public class RoleAppService :
+        AsyncCrudAppService<Role, RoleDto, int, PagedRoleResultRequestDto, CreateRoleDto, RoleDto>, IRoleAppService
     {
         private readonly RoleManager _roleManager;
         private readonly UserManager _userManager;
@@ -89,10 +90,7 @@ namespace TestProject.Roles
             var role = await _roleManager.FindByIdAsync(input.Id.ToString());
             var users = await _userManager.GetUsersInRoleAsync(role.NormalizedName);
 
-            foreach (var user in users)
-            {
-                CheckErrors(await _userManager.RemoveFromRoleAsync(user, role.NormalizedName));
-            }
+            foreach (var user in users) CheckErrors(await _userManager.RemoveFromRoleAsync(user, role.NormalizedName));
 
             CheckErrors(await _roleManager.DeleteAsync(role));
         }
@@ -106,12 +104,28 @@ namespace TestProject.Roles
             ));
         }
 
+        public async Task<GetRoleForEditOutput> GetRoleForEdit(EntityDto input)
+        {
+            var permissions = PermissionManager.GetAllPermissions();
+            var role = await _roleManager.GetRoleByIdAsync(input.Id);
+            var grantedPermissions = (await _roleManager.GetGrantedPermissionsAsync(role)).ToArray();
+            var roleEditDto = ObjectMapper.Map<RoleEditDto>(role);
+
+            return new GetRoleForEditOutput
+            {
+                Role = roleEditDto,
+                Permissions = ObjectMapper.Map<List<FlatPermissionDto>>(permissions).OrderBy(p => p.DisplayName)
+                    .ToList(),
+                GrantedPermissionNames = grantedPermissions.Select(p => p.Name).ToList()
+            };
+        }
+
         protected override IQueryable<Role> CreateFilteredQuery(PagedRoleResultRequestDto input)
         {
             return Repository.GetAllIncluding(x => x.Permissions)
                 .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.Name.Contains(input.Keyword)
-                || x.DisplayName.Contains(input.Keyword)
-                || x.Description.Contains(input.Keyword));
+                                                                   || x.DisplayName.Contains(input.Keyword)
+                                                                   || x.Description.Contains(input.Keyword));
         }
 
         protected override async Task<Role> GetEntityByIdAsync(int id)
@@ -128,21 +142,5 @@ namespace TestProject.Roles
         {
             identityResult.CheckErrors(LocalizationManager);
         }
-
-        public async Task<GetRoleForEditOutput> GetRoleForEdit(EntityDto input)
-        {
-            var permissions = PermissionManager.GetAllPermissions();
-            var role = await _roleManager.GetRoleByIdAsync(input.Id);
-            var grantedPermissions = (await _roleManager.GetGrantedPermissionsAsync(role)).ToArray();
-            var roleEditDto = ObjectMapper.Map<RoleEditDto>(role);
-
-            return new GetRoleForEditOutput
-            {
-                Role = roleEditDto,
-                Permissions = ObjectMapper.Map<List<FlatPermissionDto>>(permissions).OrderBy(p => p.DisplayName).ToList(),
-                GrantedPermissionNames = grantedPermissions.Select(p => p.Name).ToList()
-            };
-        }
     }
 }
-

@@ -7,24 +7,24 @@ namespace TestProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "UserName",
-                table: "AbpUsers",
+                "UserName",
+                "AbpUsers",
                 maxLength: 256,
                 nullable: false,
                 oldClrType: typeof(string),
                 oldMaxLength: 32);
 
             migrationBuilder.AlterColumn<string>(
-                name: "NormalizedUserName",
-                table: "AbpUsers",
+                "NormalizedUserName",
+                "AbpUsers",
                 maxLength: 256,
                 nullable: false,
                 oldClrType: typeof(string),
                 oldMaxLength: 32);
 
             migrationBuilder.AlterColumn<string>(
-                name: "UserName",
-                table: "AbpUserAccounts",
+                "UserName",
+                "AbpUserAccounts",
                 maxLength: 256,
                 nullable: true,
                 oldClrType: typeof(string),
@@ -35,24 +35,24 @@ namespace TestProject.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "UserName",
-                table: "AbpUsers",
+                "UserName",
+                "AbpUsers",
                 maxLength: 32,
                 nullable: false,
                 oldClrType: typeof(string),
                 oldMaxLength: 256);
 
             migrationBuilder.AlterColumn<string>(
-                name: "NormalizedUserName",
-                table: "AbpUsers",
+                "NormalizedUserName",
+                "AbpUsers",
                 maxLength: 32,
                 nullable: false,
                 oldClrType: typeof(string),
                 oldMaxLength: 256);
 
             migrationBuilder.AlterColumn<string>(
-                name: "UserName",
-                table: "AbpUserAccounts",
+                "UserName",
+                "AbpUserAccounts",
                 maxLength: 32,
                 nullable: true,
                 oldClrType: typeof(string),

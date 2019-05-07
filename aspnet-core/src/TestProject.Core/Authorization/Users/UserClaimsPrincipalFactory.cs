@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Abp.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using Abp.Authorization;
 using TestProject.Authorization.Roles;
 
 namespace TestProject.Authorization.Users
@@ -12,9 +12,9 @@ namespace TestProject.Authorization.Users
             RoleManager roleManager,
             IOptions<IdentityOptions> optionsAccessor)
             : base(
-                  userManager,
-                  roleManager,
-                  optionsAccessor)
+                userManager,
+                roleManager,
+                optionsAccessor)
         {
         }
     }

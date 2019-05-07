@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Abp.Authorization.Users;
 using Abp.Domain.Services;
 using Abp.IdentityFramework;
 using Abp.Runtime.Session;
 using Abp.UI;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TestProject.Authorization.Roles;
 using TestProject.MultiTenancy;
 
@@ -16,12 +16,11 @@ namespace TestProject.Authorization.Users
 {
     public class UserRegistrationManager : DomainService
     {
-        public IAbpSession AbpSession { get; set; }
+        private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly RoleManager _roleManager;
 
         private readonly TenantManager _tenantManager;
         private readonly UserManager _userManager;
-        private readonly RoleManager _roleManager;
-        private readonly IPasswordHasher<User> _passwordHasher;
 
         public UserRegistrationManager(
             TenantManager tenantManager,
@@ -37,7 +36,10 @@ namespace TestProject.Authorization.Users
             AbpSession = NullAbpSession.Instance;
         }
 
-        public async Task<User> RegisterAsync(string name, string surname, string emailAddress, string userName, string plainPassword, bool isEmailConfirmed)
+        public IAbpSession AbpSession { get; set; }
+
+        public async Task<User> RegisterAsync(string name, string surname, string emailAddress, string userName,
+            string plainPassword, bool isEmailConfirmed)
         {
             CheckForTenant();
 
@@ -56,11 +58,9 @@ namespace TestProject.Authorization.Users
             };
 
             user.SetNormalizedNames();
-           
+
             foreach (var defaultRole in await _roleManager.Roles.Where(r => r.IsDefault).ToListAsync())
-            {
                 user.Roles.Add(new UserRole(tenant.Id, user.Id, defaultRole.Id));
-            }
 
             await _userManager.InitializeOptionsAsync(tenant.Id);
 
@@ -72,18 +72,12 @@ namespace TestProject.Authorization.Users
 
         private void CheckForTenant()
         {
-            if (!AbpSession.TenantId.HasValue)
-            {
-                throw new InvalidOperationException("Can not register host users!");
-            }
+            if (!AbpSession.TenantId.HasValue) throw new InvalidOperationException("Can not register host users!");
         }
 
         private async Task<Tenant> GetActiveTenantAsync()
         {
-            if (!AbpSession.TenantId.HasValue)
-            {
-                return null;
-            }
+            if (!AbpSession.TenantId.HasValue) return null;
 
             return await GetActiveTenantAsync(AbpSession.TenantId.Value);
         }
@@ -91,15 +85,9 @@ namespace TestProject.Authorization.Users
         private async Task<Tenant> GetActiveTenantAsync(int tenantId)
         {
             var tenant = await _tenantManager.FindByIdAsync(tenantId);
-            if (tenant == null)
-            {
-                throw new UserFriendlyException(L("UnknownTenantId{0}", tenantId));
-            }
+            if (tenant == null) throw new UserFriendlyException(L("UnknownTenantId{0}", tenantId));
 
-            if (!tenant.IsActive)
-            {
-                throw new UserFriendlyException(L("TenantIdIsNotActive{0}", tenantId));
-            }
+            if (!tenant.IsActive) throw new UserFriendlyException(L("TenantIdIsNotActive{0}", tenantId));
 
             return tenant;
         }

@@ -7,8 +7,8 @@ namespace TestProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "IsDeleted",
-                table: "AbpUserOrganizationUnits",
+                "IsDeleted",
+                "AbpUserOrganizationUnits",
                 nullable: false,
                 defaultValue: false);
         }
@@ -16,8 +16,8 @@ namespace TestProject.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsDeleted",
-                table: "AbpUserOrganizationUnits");
+                "IsDeleted",
+                "AbpUserOrganizationUnits");
         }
     }
 }

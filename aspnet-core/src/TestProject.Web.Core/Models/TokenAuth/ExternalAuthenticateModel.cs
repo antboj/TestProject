@@ -13,7 +13,6 @@ namespace TestProject.Models.TokenAuth
         [StringLength(UserLogin.MaxProviderKeyLength)]
         public string ProviderKey { get; set; }
 
-        [Required]
-        public string ProviderAccessCode { get; set; }
+        [Required] public string ProviderAccessCode { get; set; }
     }
 }

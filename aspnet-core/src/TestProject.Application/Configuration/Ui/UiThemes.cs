@@ -4,8 +4,6 @@ namespace TestProject.Configuration.Ui
 {
     public static class UiThemes
     {
-        public static List<UiThemeInfo> All { get; }
-
         static UiThemes()
         {
             All = new List<UiThemeInfo>
@@ -32,5 +30,7 @@ namespace TestProject.Configuration.Ui
                 new UiThemeInfo("Black", "black")
             };
         }
+
+        public static List<UiThemeInfo> All { get; }
     }
 }

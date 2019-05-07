@@ -6,8 +6,8 @@ using Abp.Reflection.Extensions;
 namespace TestProject.Web
 {
     /// <summary>
-    /// This class is used to find root path of the web project in;
-    /// unit tests (to find views) and entity framework core command line commands (to find conn string).
+    ///     This class is used to find root path of the web project in;
+    ///     unit tests (to find views) and entity framework core command line commands (to find conn string).
     /// </summary>
     public static class WebContentDirectoryFinder
     {
@@ -15,32 +15,21 @@ namespace TestProject.Web
         {
             var coreAssemblyDirectoryPath = Path.GetDirectoryName(typeof(TestProjectCoreModule).GetAssembly().Location);
             if (coreAssemblyDirectoryPath == null)
-            {
                 throw new Exception("Could not find location of TestProject.Core assembly!");
-            }
 
             var directoryInfo = new DirectoryInfo(coreAssemblyDirectoryPath);
             while (!DirectoryContains(directoryInfo.FullName, "TestProject.sln"))
             {
-                if (directoryInfo.Parent == null)
-                {
-                    throw new Exception("Could not find content root folder!");
-                }
+                if (directoryInfo.Parent == null) throw new Exception("Could not find content root folder!");
 
                 directoryInfo = directoryInfo.Parent;
             }
 
             var webMvcFolder = Path.Combine(directoryInfo.FullName, "src", "TestProject.Web.Mvc");
-            if (Directory.Exists(webMvcFolder))
-            {
-                return webMvcFolder;
-            }
+            if (Directory.Exists(webMvcFolder)) return webMvcFolder;
 
             var webHostFolder = Path.Combine(directoryInfo.FullName, "src", "TestProject.Web.Host");
-            if (Directory.Exists(webHostFolder))
-            {
-                return webHostFolder;
-            }
+            if (Directory.Exists(webHostFolder)) return webHostFolder;
 
             throw new Exception("Could not find root folder of the web project!");
         }

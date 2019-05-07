@@ -7,8 +7,8 @@ namespace TestProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "LoginProvider",
-                table: "AbpUserTokens",
+                "LoginProvider",
+                "AbpUserTokens",
                 maxLength: 128,
                 nullable: true,
                 oldClrType: typeof(string),
@@ -19,8 +19,8 @@ namespace TestProject.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "LoginProvider",
-                table: "AbpUserTokens",
+                "LoginProvider",
+                "AbpUserTokens",
                 maxLength: 64,
                 nullable: true,
                 oldClrType: typeof(string),

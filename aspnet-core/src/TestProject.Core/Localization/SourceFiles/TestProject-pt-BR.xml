@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <localizationDictionary culture="pt-BR">
   <texts>
     <text name="HomePage" value="Página Inicial" />
@@ -30,12 +31,14 @@
     <text name="AdminEmailAddress" value="Endereço de e-mail administrador" />
     <text name="Save" value="Salvar" />
     <text name="Cancel" value="Cancelar" />
-    <text name="TenantName_Regex_Description" value="Tenant deve ter no mínimo 2 caracteres, começa com uma letra e continuar com letra, número, traço ou sublinhado." />
+    <text name="TenantName_Regex_Description"
+          value="Tenant deve ter no mínimo 2 caracteres, começa com uma letra e continuar com letra, número, traço ou sublinhado." />
     <text name="DefaultPasswordIs" value="Senha padrão é {0}" />
     <text name="CanBeEmptyToLoginAsHost" value="Pode estar vazio para acessar como Host." />
     <text name="Register" value="Registrar" />
     <text name="OrLoginWith" value="Ou faça o login com" />
-    <text name="WaitingForActivationMessage" value="A sua conta está esperando para ser ativado pelo administrador do sistema." />
+    <text name="WaitingForActivationMessage"
+          value="A sua conta está esperando para ser ativado pelo administrador do sistema." />
     <text name="TenantSelection" value="Seleção de Tenant" />
     <text name="TenantSelection_Detail" value="Por favor selecione um dos seguintes tenants." />
     <text name="Logout" value="Sair" />

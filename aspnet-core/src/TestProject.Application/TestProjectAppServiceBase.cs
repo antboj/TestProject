@@ -1,35 +1,32 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Abp.Application.Services;
 using Abp.IdentityFramework;
 using Abp.Runtime.Session;
+using Microsoft.AspNetCore.Identity;
 using TestProject.Authorization.Users;
 using TestProject.MultiTenancy;
 
 namespace TestProject
 {
     /// <summary>
-    /// Derive your application services from this class.
+    ///     Derive your application services from this class.
     /// </summary>
     public abstract class TestProjectAppServiceBase : ApplicationService
     {
-        public TenantManager TenantManager { get; set; }
-
-        public UserManager UserManager { get; set; }
-
         protected TestProjectAppServiceBase()
         {
             LocalizationSourceName = TestProjectConsts.LocalizationSourceName;
         }
 
+        public TenantManager TenantManager { get; set; }
+
+        public UserManager UserManager { get; set; }
+
         protected virtual Task<User> GetCurrentUserAsync()
         {
             var user = UserManager.FindByIdAsync(AbpSession.GetUserId().ToString());
-            if (user == null)
-            {
-                throw new Exception("There is no current user!");
-            }
+            if (user == null) throw new Exception("There is no current user!");
 
             return user;
         }

@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
 namespace TestProject.Migrations
 {
@@ -10,43 +9,44 @@ namespace TestProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "ClaimType",
-                table: "AbpUserClaims",
+                "ClaimType",
+                "AbpUserClaims",
                 maxLength: 256,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "UserName",
-                table: "AbpUserAccounts",
+                "UserName",
+                "AbpUserAccounts",
                 maxLength: 32,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "EmailAddress",
-                table: "AbpUserAccounts",
+                "EmailAddress",
+                "AbpUserAccounts",
                 maxLength: 256,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "ClaimType",
-                table: "AbpRoleClaims",
+                "ClaimType",
+                "AbpRoleClaims",
                 maxLength: 256,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldNullable: true);
 
             migrationBuilder.CreateTable(
-                name: "AbpEntityChangeSets",
-                columns: table => new
+                "AbpEntityChangeSets",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     BrowserInfo = table.Column<string>(maxLength: 256, nullable: true),
                     ClientIpAddress = table.Column<string>(maxLength: 64, nullable: true),
                     ClientName = table.Column<string>(maxLength: 128, nullable: true),
@@ -58,17 +58,15 @@ namespace TestProject.Migrations
                     TenantId = table.Column<int>(nullable: true),
                     UserId = table.Column<long>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpEntityChangeSets", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AbpEntityChangeSets", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AbpEntityChanges",
-                columns: table => new
+                "AbpEntityChanges",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     ChangeTime = table.Column<DateTime>(nullable: false),
                     ChangeType = table.Column<byte>(nullable: false),
                     EntityChangeSetId = table.Column<long>(nullable: false),
@@ -80,19 +78,20 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_AbpEntityChanges", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpEntityChanges_AbpEntityChangeSets_EntityChangeSetId",
-                        column: x => x.EntityChangeSetId,
-                        principalTable: "AbpEntityChangeSets",
-                        principalColumn: "Id",
+                        "FK_AbpEntityChanges_AbpEntityChangeSets_EntityChangeSetId",
+                        x => x.EntityChangeSetId,
+                        "AbpEntityChangeSets",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpEntityPropertyChanges",
-                columns: table => new
+                "AbpEntityPropertyChanges",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     EntityChangeId = table.Column<long>(nullable: false),
                     NewValue = table.Column<string>(maxLength: 512, nullable: true),
                     OriginalValue = table.Column<string>(maxLength: 512, nullable: true),
@@ -104,82 +103,82 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_AbpEntityPropertyChanges", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpEntityPropertyChanges_AbpEntityChanges_EntityChangeId",
-                        column: x => x.EntityChangeId,
-                        principalTable: "AbpEntityChanges",
-                        principalColumn: "Id",
+                        "FK_AbpEntityPropertyChanges_AbpEntityChanges_EntityChangeId",
+                        x => x.EntityChangeId,
+                        "AbpEntityChanges",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpEntityChanges_EntityChangeSetId",
-                table: "AbpEntityChanges",
-                column: "EntityChangeSetId");
+                "IX_AbpEntityChanges_EntityChangeSetId",
+                "AbpEntityChanges",
+                "EntityChangeSetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpEntityChanges_EntityTypeFullName_EntityId",
-                table: "AbpEntityChanges",
-                columns: new[] { "EntityTypeFullName", "EntityId" });
+                "IX_AbpEntityChanges_EntityTypeFullName_EntityId",
+                "AbpEntityChanges",
+                new[] {"EntityTypeFullName", "EntityId"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpEntityChangeSets_TenantId_CreationTime",
-                table: "AbpEntityChangeSets",
-                columns: new[] { "TenantId", "CreationTime" });
+                "IX_AbpEntityChangeSets_TenantId_CreationTime",
+                "AbpEntityChangeSets",
+                new[] {"TenantId", "CreationTime"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpEntityChangeSets_TenantId_Reason",
-                table: "AbpEntityChangeSets",
-                columns: new[] { "TenantId", "Reason" });
+                "IX_AbpEntityChangeSets_TenantId_Reason",
+                "AbpEntityChangeSets",
+                new[] {"TenantId", "Reason"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpEntityChangeSets_TenantId_UserId",
-                table: "AbpEntityChangeSets",
-                columns: new[] { "TenantId", "UserId" });
+                "IX_AbpEntityChangeSets_TenantId_UserId",
+                "AbpEntityChangeSets",
+                new[] {"TenantId", "UserId"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpEntityPropertyChanges_EntityChangeId",
-                table: "AbpEntityPropertyChanges",
-                column: "EntityChangeId");
+                "IX_AbpEntityPropertyChanges_EntityChangeId",
+                "AbpEntityPropertyChanges",
+                "EntityChangeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AbpEntityPropertyChanges");
+                "AbpEntityPropertyChanges");
 
             migrationBuilder.DropTable(
-                name: "AbpEntityChanges");
+                "AbpEntityChanges");
 
             migrationBuilder.DropTable(
-                name: "AbpEntityChangeSets");
+                "AbpEntityChangeSets");
 
             migrationBuilder.AlterColumn<string>(
-                name: "ClaimType",
-                table: "AbpUserClaims",
+                "ClaimType",
+                "AbpUserClaims",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 256,
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "UserName",
-                table: "AbpUserAccounts",
+                "UserName",
+                "AbpUserAccounts",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 32,
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "EmailAddress",
-                table: "AbpUserAccounts",
+                "EmailAddress",
+                "AbpUserAccounts",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 256,
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "ClaimType",
-                table: "AbpRoleClaims",
+                "ClaimType",
+                "AbpRoleClaims",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 256,

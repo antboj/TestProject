@@ -38,10 +38,7 @@ namespace TestProject.Users.Dto
 
         public void Normalize()
         {
-            if (RoleNames == null)
-            {
-                RoleNames = new string[0];
-            }
+            if (RoleNames == null) RoleNames = new string[0];
         }
     }
 }

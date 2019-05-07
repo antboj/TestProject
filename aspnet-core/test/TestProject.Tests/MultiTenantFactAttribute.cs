@@ -6,10 +6,7 @@ namespace TestProject.Tests
     {
         public MultiTenantFactAttribute()
         {
-            if (!TestProjectConsts.MultiTenancyEnabled)
-            {
-                Skip = "MultiTenancy is disabled.";
-            }
+            if (!TestProjectConsts.MultiTenancyEnabled) Skip = "MultiTenancy is disabled.";
         }
     }
 }

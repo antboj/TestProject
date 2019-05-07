@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TestProject.Migrations
 {
@@ -9,11 +9,12 @@ namespace TestProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AbpEditions",
-                columns: table => new
+                "AbpEditions",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
                     DeleterUserId = table.Column<long>(nullable: true),
@@ -24,17 +25,15 @@ namespace TestProject.Migrations
                     LastModifierUserId = table.Column<long>(nullable: true),
                     Name = table.Column<string>(maxLength: 32, nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpEditions", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AbpEditions", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AbpAuditLogs",
-                columns: table => new
+                "AbpAuditLogs",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     BrowserInfo = table.Column<string>(maxLength: 256, nullable: true),
                     ClientIpAddress = table.Column<string>(maxLength: 64, nullable: true),
                     ClientName = table.Column<string>(maxLength: 128, nullable: true),
@@ -50,17 +49,15 @@ namespace TestProject.Migrations
                     TenantId = table.Column<int>(nullable: true),
                     UserId = table.Column<long>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpAuditLogs", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AbpAuditLogs", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AbpUserAccounts",
-                columns: table => new
+                "AbpUserAccounts",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
                     DeleterUserId = table.Column<long>(nullable: true),
@@ -75,17 +72,15 @@ namespace TestProject.Migrations
                     UserLinkId = table.Column<long>(nullable: true),
                     UserName = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpUserAccounts", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AbpUserAccounts", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AbpUserLoginAttempts",
-                columns: table => new
+                "AbpUserLoginAttempts",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     BrowserInfo = table.Column<string>(maxLength: 256, nullable: true),
                     ClientIpAddress = table.Column<string>(maxLength: 64, nullable: true),
                     ClientName = table.Column<string>(maxLength: 128, nullable: true),
@@ -96,34 +91,30 @@ namespace TestProject.Migrations
                     UserId = table.Column<long>(nullable: true),
                     UserNameOrEmailAddress = table.Column<string>(maxLength: 255, nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpUserLoginAttempts", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AbpUserLoginAttempts", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AbpUserOrganizationUnits",
-                columns: table => new
+                "AbpUserOrganizationUnits",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
                     OrganizationUnitId = table.Column<long>(nullable: false),
                     TenantId = table.Column<int>(nullable: true),
                     UserId = table.Column<long>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpUserOrganizationUnits", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AbpUserOrganizationUnits", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AbpBackgroundJobs",
-                columns: table => new
+                "AbpBackgroundJobs",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
                     IsAbandoned = table.Column<bool>(nullable: false),
@@ -134,17 +125,15 @@ namespace TestProject.Migrations
                     Priority = table.Column<byte>(nullable: false),
                     TryCount = table.Column<short>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpBackgroundJobs", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AbpBackgroundJobs", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AbpLanguages",
-                columns: table => new
+                "AbpLanguages",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
                     DeleterUserId = table.Column<long>(nullable: true),
@@ -157,17 +146,15 @@ namespace TestProject.Migrations
                     Name = table.Column<string>(maxLength: 10, nullable: false),
                     TenantId = table.Column<int>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpLanguages", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AbpLanguages", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AbpLanguageTexts",
-                columns: table => new
+                "AbpLanguageTexts",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
                     Key = table.Column<string>(maxLength: 256, nullable: false),
@@ -178,14 +165,11 @@ namespace TestProject.Migrations
                     TenantId = table.Column<int>(nullable: true),
                     Value = table.Column<string>(maxLength: 67108864, nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpLanguageTexts", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AbpLanguageTexts", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AbpNotifications",
-                columns: table => new
+                "AbpNotifications",
+                table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
@@ -201,14 +185,11 @@ namespace TestProject.Migrations
                     TenantIds = table.Column<string>(maxLength: 131072, nullable: true),
                     UserIds = table.Column<string>(maxLength: 131072, nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpNotifications", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AbpNotifications", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AbpNotificationSubscriptions",
-                columns: table => new
+                "AbpNotificationSubscriptions",
+                table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
@@ -220,14 +201,11 @@ namespace TestProject.Migrations
                     TenantId = table.Column<int>(nullable: true),
                     UserId = table.Column<long>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpNotificationSubscriptions", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AbpNotificationSubscriptions", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AbpTenantNotifications",
-                columns: table => new
+                "AbpTenantNotifications",
+                table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
@@ -241,14 +219,11 @@ namespace TestProject.Migrations
                     Severity = table.Column<byte>(nullable: false),
                     TenantId = table.Column<int>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpTenantNotifications", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AbpTenantNotifications", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AbpUserNotifications",
-                columns: table => new
+                "AbpUserNotifications",
+                table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
@@ -257,17 +232,15 @@ namespace TestProject.Migrations
                     TenantNotificationId = table.Column<Guid>(nullable: false),
                     UserId = table.Column<long>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpUserNotifications", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AbpUserNotifications", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AbpOrganizationUnits",
-                columns: table => new
+                "AbpOrganizationUnits",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     Code = table.Column<string>(maxLength: 95, nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
@@ -284,19 +257,20 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_AbpOrganizationUnits", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpOrganizationUnits_AbpOrganizationUnits_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "AbpOrganizationUnits",
-                        principalColumn: "Id",
+                        "FK_AbpOrganizationUnits_AbpOrganizationUnits_ParentId",
+                        x => x.ParentId,
+                        "AbpOrganizationUnits",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpUsers",
-                columns: table => new
+                "AbpUsers",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     AuthenticationSource = table.Column<string>(maxLength: 64, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
@@ -331,31 +305,32 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_AbpUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpUsers_AbpUsers_CreatorUserId",
-                        column: x => x.CreatorUserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
+                        "FK_AbpUsers_AbpUsers_CreatorUserId",
+                        x => x.CreatorUserId,
+                        "AbpUsers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AbpUsers_AbpUsers_DeleterUserId",
-                        column: x => x.DeleterUserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
+                        "FK_AbpUsers_AbpUsers_DeleterUserId",
+                        x => x.DeleterUserId,
+                        "AbpUsers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AbpUsers_AbpUsers_LastModifierUserId",
-                        column: x => x.LastModifierUserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
+                        "FK_AbpUsers_AbpUsers_LastModifierUserId",
+                        x => x.LastModifierUserId,
+                        "AbpUsers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpFeatures",
-                columns: table => new
+                "AbpFeatures",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
                     Discriminator = table.Column<string>(nullable: false),
@@ -368,19 +343,20 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_AbpFeatures", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpFeatures_AbpEditions_EditionId",
-                        column: x => x.EditionId,
-                        principalTable: "AbpEditions",
-                        principalColumn: "Id",
+                        "FK_AbpFeatures_AbpEditions_EditionId",
+                        x => x.EditionId,
+                        "AbpEditions",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpUserClaims",
-                columns: table => new
+                "AbpUserClaims",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     CreationTime = table.Column<DateTime>(nullable: false),
@@ -392,19 +368,20 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_AbpUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpUserClaims_AbpUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
+                        "FK_AbpUserClaims_AbpUsers_UserId",
+                        x => x.UserId,
+                        "AbpUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpUserLogins",
-                columns: table => new
+                "AbpUserLogins",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
                     ProviderKey = table.Column<string>(maxLength: 256, nullable: false),
                     TenantId = table.Column<int>(nullable: true),
@@ -414,19 +391,20 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_AbpUserLogins", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpUserLogins_AbpUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
+                        "FK_AbpUserLogins_AbpUsers_UserId",
+                        x => x.UserId,
+                        "AbpUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpUserRoles",
-                columns: table => new
+                "AbpUserRoles",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
                     RoleId = table.Column<int>(nullable: false),
@@ -437,19 +415,20 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_AbpUserRoles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpUserRoles_AbpUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
+                        "FK_AbpUserRoles_AbpUsers_UserId",
+                        x => x.UserId,
+                        "AbpUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpUserTokens",
-                columns: table => new
+                "AbpUserTokens",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     LoginProvider = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     TenantId = table.Column<int>(nullable: true),
@@ -460,19 +439,20 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_AbpUserTokens", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpUserTokens_AbpUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
+                        "FK_AbpUserTokens_AbpUsers_UserId",
+                        x => x.UserId,
+                        "AbpUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpSettings",
-                columns: table => new
+                "AbpSettings",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
                     LastModificationTime = table.Column<DateTime>(nullable: true),
@@ -486,19 +466,20 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_AbpSettings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpSettings_AbpUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
+                        "FK_AbpSettings_AbpUsers_UserId",
+                        x => x.UserId,
+                        "AbpUsers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpRoles",
-                columns: table => new
+                "AbpRoles",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
@@ -518,31 +499,32 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_AbpRoles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpRoles_AbpUsers_CreatorUserId",
-                        column: x => x.CreatorUserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
+                        "FK_AbpRoles_AbpUsers_CreatorUserId",
+                        x => x.CreatorUserId,
+                        "AbpUsers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AbpRoles_AbpUsers_DeleterUserId",
-                        column: x => x.DeleterUserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
+                        "FK_AbpRoles_AbpUsers_DeleterUserId",
+                        x => x.DeleterUserId,
+                        "AbpUsers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AbpRoles_AbpUsers_LastModifierUserId",
-                        column: x => x.LastModifierUserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
+                        "FK_AbpRoles_AbpUsers_LastModifierUserId",
+                        x => x.LastModifierUserId,
+                        "AbpUsers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpTenants",
-                columns: table => new
+                "AbpTenants",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     ConnectionString = table.Column<string>(maxLength: 1024, nullable: true),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
@@ -560,37 +542,38 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_AbpTenants", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpTenants_AbpUsers_CreatorUserId",
-                        column: x => x.CreatorUserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
+                        "FK_AbpTenants_AbpUsers_CreatorUserId",
+                        x => x.CreatorUserId,
+                        "AbpUsers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AbpTenants_AbpUsers_DeleterUserId",
-                        column: x => x.DeleterUserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
+                        "FK_AbpTenants_AbpUsers_DeleterUserId",
+                        x => x.DeleterUserId,
+                        "AbpUsers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AbpTenants_AbpEditions_EditionId",
-                        column: x => x.EditionId,
-                        principalTable: "AbpEditions",
-                        principalColumn: "Id",
+                        "FK_AbpTenants_AbpEditions_EditionId",
+                        x => x.EditionId,
+                        "AbpEditions",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AbpTenants_AbpUsers_LastModifierUserId",
-                        column: x => x.LastModifierUserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
+                        "FK_AbpTenants_AbpUsers_LastModifierUserId",
+                        x => x.LastModifierUserId,
+                        "AbpUsers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpPermissions",
-                columns: table => new
+                "AbpPermissions",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
                     Discriminator = table.Column<string>(nullable: false),
@@ -604,25 +587,26 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_AbpPermissions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpPermissions_AbpRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AbpRoles",
-                        principalColumn: "Id",
+                        "FK_AbpPermissions_AbpRoles_RoleId",
+                        x => x.RoleId,
+                        "AbpRoles",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AbpPermissions_AbpUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
+                        "FK_AbpPermissions_AbpUsers_UserId",
+                        x => x.UserId,
+                        "AbpUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpRoleClaims",
-                columns: table => new
+                "AbpRoleClaims",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     CreationTime = table.Column<DateTime>(nullable: false),
@@ -635,362 +619,362 @@ namespace TestProject.Migrations
                 {
                     table.PrimaryKey("PK_AbpRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpRoleClaims_AbpRoles_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AbpRoles",
-                        principalColumn: "Id",
+                        "FK_AbpRoleClaims_AbpRoles_UserId",
+                        x => x.UserId,
+                        "AbpRoles",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpFeatures_EditionId_Name",
-                table: "AbpFeatures",
-                columns: new[] { "EditionId", "Name" });
+                "IX_AbpFeatures_EditionId_Name",
+                "AbpFeatures",
+                new[] {"EditionId", "Name"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpFeatures_TenantId_Name",
-                table: "AbpFeatures",
-                columns: new[] { "TenantId", "Name" });
+                "IX_AbpFeatures_TenantId_Name",
+                "AbpFeatures",
+                new[] {"TenantId", "Name"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpAuditLogs_TenantId_ExecutionDuration",
-                table: "AbpAuditLogs",
-                columns: new[] { "TenantId", "ExecutionDuration" });
+                "IX_AbpAuditLogs_TenantId_ExecutionDuration",
+                "AbpAuditLogs",
+                new[] {"TenantId", "ExecutionDuration"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpAuditLogs_TenantId_ExecutionTime",
-                table: "AbpAuditLogs",
-                columns: new[] { "TenantId", "ExecutionTime" });
+                "IX_AbpAuditLogs_TenantId_ExecutionTime",
+                "AbpAuditLogs",
+                new[] {"TenantId", "ExecutionTime"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpAuditLogs_TenantId_UserId",
-                table: "AbpAuditLogs",
-                columns: new[] { "TenantId", "UserId" });
+                "IX_AbpAuditLogs_TenantId_UserId",
+                "AbpAuditLogs",
+                new[] {"TenantId", "UserId"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpPermissions_TenantId_Name",
-                table: "AbpPermissions",
-                columns: new[] { "TenantId", "Name" });
+                "IX_AbpPermissions_TenantId_Name",
+                "AbpPermissions",
+                new[] {"TenantId", "Name"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpPermissions_RoleId",
-                table: "AbpPermissions",
-                column: "RoleId");
+                "IX_AbpPermissions_RoleId",
+                "AbpPermissions",
+                "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpPermissions_UserId",
-                table: "AbpPermissions",
-                column: "UserId");
+                "IX_AbpPermissions_UserId",
+                "AbpPermissions",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpRoleClaims_RoleId",
-                table: "AbpRoleClaims",
-                column: "RoleId");
+                "IX_AbpRoleClaims_RoleId",
+                "AbpRoleClaims",
+                "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpRoleClaims_UserId",
-                table: "AbpRoleClaims",
-                column: "UserId");
+                "IX_AbpRoleClaims_UserId",
+                "AbpRoleClaims",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpRoleClaims_TenantId_ClaimType",
-                table: "AbpRoleClaims",
-                columns: new[] { "TenantId", "ClaimType" });
+                "IX_AbpRoleClaims_TenantId_ClaimType",
+                "AbpRoleClaims",
+                new[] {"TenantId", "ClaimType"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserAccounts_EmailAddress",
-                table: "AbpUserAccounts",
-                column: "EmailAddress");
+                "IX_AbpUserAccounts_EmailAddress",
+                "AbpUserAccounts",
+                "EmailAddress");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserAccounts_UserName",
-                table: "AbpUserAccounts",
-                column: "UserName");
+                "IX_AbpUserAccounts_UserName",
+                "AbpUserAccounts",
+                "UserName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserAccounts_TenantId_EmailAddress",
-                table: "AbpUserAccounts",
-                columns: new[] { "TenantId", "EmailAddress" });
+                "IX_AbpUserAccounts_TenantId_EmailAddress",
+                "AbpUserAccounts",
+                new[] {"TenantId", "EmailAddress"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserAccounts_TenantId_UserId",
-                table: "AbpUserAccounts",
-                columns: new[] { "TenantId", "UserId" });
+                "IX_AbpUserAccounts_TenantId_UserId",
+                "AbpUserAccounts",
+                new[] {"TenantId", "UserId"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserAccounts_TenantId_UserName",
-                table: "AbpUserAccounts",
-                columns: new[] { "TenantId", "UserName" });
+                "IX_AbpUserAccounts_TenantId_UserName",
+                "AbpUserAccounts",
+                new[] {"TenantId", "UserName"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserClaims_UserId",
-                table: "AbpUserClaims",
-                column: "UserId");
+                "IX_AbpUserClaims_UserId",
+                "AbpUserClaims",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserClaims_TenantId_ClaimType",
-                table: "AbpUserClaims",
-                columns: new[] { "TenantId", "ClaimType" });
+                "IX_AbpUserClaims_TenantId_ClaimType",
+                "AbpUserClaims",
+                new[] {"TenantId", "ClaimType"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserLogins_UserId",
-                table: "AbpUserLogins",
-                column: "UserId");
+                "IX_AbpUserLogins_UserId",
+                "AbpUserLogins",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserLogins_TenantId_UserId",
-                table: "AbpUserLogins",
-                columns: new[] { "TenantId", "UserId" });
+                "IX_AbpUserLogins_TenantId_UserId",
+                "AbpUserLogins",
+                new[] {"TenantId", "UserId"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserLogins_TenantId_LoginProvider_ProviderKey",
-                table: "AbpUserLogins",
-                columns: new[] { "TenantId", "LoginProvider", "ProviderKey" });
+                "IX_AbpUserLogins_TenantId_LoginProvider_ProviderKey",
+                "AbpUserLogins",
+                new[] {"TenantId", "LoginProvider", "ProviderKey"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserLoginAttempts_UserId_TenantId",
-                table: "AbpUserLoginAttempts",
-                columns: new[] { "UserId", "TenantId" });
+                "IX_AbpUserLoginAttempts_UserId_TenantId",
+                "AbpUserLoginAttempts",
+                new[] {"UserId", "TenantId"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserLoginAttempts_TenancyName_UserNameOrEmailAddress_Result",
-                table: "AbpUserLoginAttempts",
-                columns: new[] { "TenancyName", "UserNameOrEmailAddress", "Result" });
+                "IX_AbpUserLoginAttempts_TenancyName_UserNameOrEmailAddress_Result",
+                "AbpUserLoginAttempts",
+                new[] {"TenancyName", "UserNameOrEmailAddress", "Result"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserOrganizationUnits_TenantId_OrganizationUnitId",
-                table: "AbpUserOrganizationUnits",
-                columns: new[] { "TenantId", "OrganizationUnitId" });
+                "IX_AbpUserOrganizationUnits_TenantId_OrganizationUnitId",
+                "AbpUserOrganizationUnits",
+                new[] {"TenantId", "OrganizationUnitId"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserOrganizationUnits_TenantId_UserId",
-                table: "AbpUserOrganizationUnits",
-                columns: new[] { "TenantId", "UserId" });
+                "IX_AbpUserOrganizationUnits_TenantId_UserId",
+                "AbpUserOrganizationUnits",
+                new[] {"TenantId", "UserId"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserRoles_UserId",
-                table: "AbpUserRoles",
-                column: "UserId");
+                "IX_AbpUserRoles_UserId",
+                "AbpUserRoles",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserRoles_TenantId_RoleId",
-                table: "AbpUserRoles",
-                columns: new[] { "TenantId", "RoleId" });
+                "IX_AbpUserRoles_TenantId_RoleId",
+                "AbpUserRoles",
+                new[] {"TenantId", "RoleId"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserRoles_TenantId_UserId",
-                table: "AbpUserRoles",
-                columns: new[] { "TenantId", "UserId" });
+                "IX_AbpUserRoles_TenantId_UserId",
+                "AbpUserRoles",
+                new[] {"TenantId", "UserId"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserTokens_UserId",
-                table: "AbpUserTokens",
-                column: "UserId");
+                "IX_AbpUserTokens_UserId",
+                "AbpUserTokens",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserTokens_TenantId_UserId",
-                table: "AbpUserTokens",
-                columns: new[] { "TenantId", "UserId" });
+                "IX_AbpUserTokens_TenantId_UserId",
+                "AbpUserTokens",
+                new[] {"TenantId", "UserId"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpBackgroundJobs_IsAbandoned_NextTryTime",
-                table: "AbpBackgroundJobs",
-                columns: new[] { "IsAbandoned", "NextTryTime" });
+                "IX_AbpBackgroundJobs_IsAbandoned_NextTryTime",
+                "AbpBackgroundJobs",
+                new[] {"IsAbandoned", "NextTryTime"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpSettings_UserId",
-                table: "AbpSettings",
-                column: "UserId");
+                "IX_AbpSettings_UserId",
+                "AbpSettings",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpSettings_TenantId_Name",
-                table: "AbpSettings",
-                columns: new[] { "TenantId", "Name" });
+                "IX_AbpSettings_TenantId_Name",
+                "AbpSettings",
+                new[] {"TenantId", "Name"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpLanguages_TenantId_Name",
-                table: "AbpLanguages",
-                columns: new[] { "TenantId", "Name" });
+                "IX_AbpLanguages_TenantId_Name",
+                "AbpLanguages",
+                new[] {"TenantId", "Name"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpLanguageTexts_TenantId_Source_LanguageName_Key",
-                table: "AbpLanguageTexts",
-                columns: new[] { "TenantId", "Source", "LanguageName", "Key" });
+                "IX_AbpLanguageTexts_TenantId_Source_LanguageName_Key",
+                "AbpLanguageTexts",
+                new[] {"TenantId", "Source", "LanguageName", "Key"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpNotificationSubscriptions_NotificationName_EntityTypeName_EntityId_UserId",
-                table: "AbpNotificationSubscriptions",
-                columns: new[] { "NotificationName", "EntityTypeName", "EntityId", "UserId" });
+                "IX_AbpNotificationSubscriptions_NotificationName_EntityTypeName_EntityId_UserId",
+                "AbpNotificationSubscriptions",
+                new[] {"NotificationName", "EntityTypeName", "EntityId", "UserId"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpNotificationSubscriptions_TenantId_NotificationName_EntityTypeName_EntityId_UserId",
-                table: "AbpNotificationSubscriptions",
-                columns: new[] { "TenantId", "NotificationName", "EntityTypeName", "EntityId", "UserId" });
+                "IX_AbpNotificationSubscriptions_TenantId_NotificationName_EntityTypeName_EntityId_UserId",
+                "AbpNotificationSubscriptions",
+                new[] {"TenantId", "NotificationName", "EntityTypeName", "EntityId", "UserId"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpTenantNotifications_TenantId",
-                table: "AbpTenantNotifications",
-                column: "TenantId");
+                "IX_AbpTenantNotifications_TenantId",
+                "AbpTenantNotifications",
+                "TenantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUserNotifications_UserId_State_CreationTime",
-                table: "AbpUserNotifications",
-                columns: new[] { "UserId", "State", "CreationTime" });
+                "IX_AbpUserNotifications_UserId_State_CreationTime",
+                "AbpUserNotifications",
+                new[] {"UserId", "State", "CreationTime"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpOrganizationUnits_ParentId",
-                table: "AbpOrganizationUnits",
-                column: "ParentId");
+                "IX_AbpOrganizationUnits_ParentId",
+                "AbpOrganizationUnits",
+                "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpOrganizationUnits_TenantId_Code",
-                table: "AbpOrganizationUnits",
-                columns: new[] { "TenantId", "Code" });
+                "IX_AbpOrganizationUnits_TenantId_Code",
+                "AbpOrganizationUnits",
+                new[] {"TenantId", "Code"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpRoles_CreatorUserId",
-                table: "AbpRoles",
-                column: "CreatorUserId");
+                "IX_AbpRoles_CreatorUserId",
+                "AbpRoles",
+                "CreatorUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpRoles_DeleterUserId",
-                table: "AbpRoles",
-                column: "DeleterUserId");
+                "IX_AbpRoles_DeleterUserId",
+                "AbpRoles",
+                "DeleterUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpRoles_LastModifierUserId",
-                table: "AbpRoles",
-                column: "LastModifierUserId");
+                "IX_AbpRoles_LastModifierUserId",
+                "AbpRoles",
+                "LastModifierUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpRoles_TenantId_NormalizedName",
-                table: "AbpRoles",
-                columns: new[] { "TenantId", "NormalizedName" });
+                "IX_AbpRoles_TenantId_NormalizedName",
+                "AbpRoles",
+                new[] {"TenantId", "NormalizedName"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUsers_CreatorUserId",
-                table: "AbpUsers",
-                column: "CreatorUserId");
+                "IX_AbpUsers_CreatorUserId",
+                "AbpUsers",
+                "CreatorUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUsers_DeleterUserId",
-                table: "AbpUsers",
-                column: "DeleterUserId");
+                "IX_AbpUsers_DeleterUserId",
+                "AbpUsers",
+                "DeleterUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUsers_LastModifierUserId",
-                table: "AbpUsers",
-                column: "LastModifierUserId");
+                "IX_AbpUsers_LastModifierUserId",
+                "AbpUsers",
+                "LastModifierUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUsers_TenantId_NormalizedEmailAddress",
-                table: "AbpUsers",
-                columns: new[] { "TenantId", "NormalizedEmailAddress" });
+                "IX_AbpUsers_TenantId_NormalizedEmailAddress",
+                "AbpUsers",
+                new[] {"TenantId", "NormalizedEmailAddress"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpUsers_TenantId_NormalizedUserName",
-                table: "AbpUsers",
-                columns: new[] { "TenantId", "NormalizedUserName" });
+                "IX_AbpUsers_TenantId_NormalizedUserName",
+                "AbpUsers",
+                new[] {"TenantId", "NormalizedUserName"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpTenants_CreatorUserId",
-                table: "AbpTenants",
-                column: "CreatorUserId");
+                "IX_AbpTenants_CreatorUserId",
+                "AbpTenants",
+                "CreatorUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpTenants_DeleterUserId",
-                table: "AbpTenants",
-                column: "DeleterUserId");
+                "IX_AbpTenants_DeleterUserId",
+                "AbpTenants",
+                "DeleterUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpTenants_EditionId",
-                table: "AbpTenants",
-                column: "EditionId");
+                "IX_AbpTenants_EditionId",
+                "AbpTenants",
+                "EditionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpTenants_LastModifierUserId",
-                table: "AbpTenants",
-                column: "LastModifierUserId");
+                "IX_AbpTenants_LastModifierUserId",
+                "AbpTenants",
+                "LastModifierUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpTenants_TenancyName",
-                table: "AbpTenants",
-                column: "TenancyName");
+                "IX_AbpTenants_TenancyName",
+                "AbpTenants",
+                "TenancyName");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AbpFeatures");
+                "AbpFeatures");
 
             migrationBuilder.DropTable(
-                name: "AbpAuditLogs");
+                "AbpAuditLogs");
 
             migrationBuilder.DropTable(
-                name: "AbpPermissions");
+                "AbpPermissions");
 
             migrationBuilder.DropTable(
-                name: "AbpRoleClaims");
+                "AbpRoleClaims");
 
             migrationBuilder.DropTable(
-                name: "AbpUserAccounts");
+                "AbpUserAccounts");
 
             migrationBuilder.DropTable(
-                name: "AbpUserClaims");
+                "AbpUserClaims");
 
             migrationBuilder.DropTable(
-                name: "AbpUserLogins");
+                "AbpUserLogins");
 
             migrationBuilder.DropTable(
-                name: "AbpUserLoginAttempts");
+                "AbpUserLoginAttempts");
 
             migrationBuilder.DropTable(
-                name: "AbpUserOrganizationUnits");
+                "AbpUserOrganizationUnits");
 
             migrationBuilder.DropTable(
-                name: "AbpUserRoles");
+                "AbpUserRoles");
 
             migrationBuilder.DropTable(
-                name: "AbpUserTokens");
+                "AbpUserTokens");
 
             migrationBuilder.DropTable(
-                name: "AbpBackgroundJobs");
+                "AbpBackgroundJobs");
 
             migrationBuilder.DropTable(
-                name: "AbpSettings");
+                "AbpSettings");
 
             migrationBuilder.DropTable(
-                name: "AbpLanguages");
+                "AbpLanguages");
 
             migrationBuilder.DropTable(
-                name: "AbpLanguageTexts");
+                "AbpLanguageTexts");
 
             migrationBuilder.DropTable(
-                name: "AbpNotifications");
+                "AbpNotifications");
 
             migrationBuilder.DropTable(
-                name: "AbpNotificationSubscriptions");
+                "AbpNotificationSubscriptions");
 
             migrationBuilder.DropTable(
-                name: "AbpTenantNotifications");
+                "AbpTenantNotifications");
 
             migrationBuilder.DropTable(
-                name: "AbpUserNotifications");
+                "AbpUserNotifications");
 
             migrationBuilder.DropTable(
-                name: "AbpOrganizationUnits");
+                "AbpOrganizationUnits");
 
             migrationBuilder.DropTable(
-                name: "AbpTenants");
+                "AbpTenants");
 
             migrationBuilder.DropTable(
-                name: "AbpRoles");
+                "AbpRoles");
 
             migrationBuilder.DropTable(
-                name: "AbpEditions");
+                "AbpEditions");
 
             migrationBuilder.DropTable(
-                name: "AbpUsers");
+                "AbpUsers");
         }
     }
 }

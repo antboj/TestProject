@@ -8,4 +8,3 @@ namespace TestProject.MultiTenancy.Dto
         public bool? IsActive { get; set; }
     }
 }
-

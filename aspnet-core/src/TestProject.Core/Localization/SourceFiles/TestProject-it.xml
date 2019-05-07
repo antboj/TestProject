@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <localizationDictionary culture="it">
   <texts>
     <text name="HomePage" value="Home page" />
@@ -35,7 +36,8 @@
     <text name="AdminEmailAddress" value="Indirizzo email Amministratore" />
     <text name="Save" value="Salva" />
     <text name="Cancel" value="Annulla" />
-    <text name="TenantName_Regex_Description" value="Il dominio deve essere di almeno 2 caratteri, iniziare con una lettera e continuare con lettere, numeri o trattini." />
+    <text name="TenantName_Regex_Description"
+          value="Il dominio deve essere di almeno 2 caratteri, iniziare con una lettera e continuare con lettere, numeri o trattini." />
     <text name="DefaultPasswordIs" value="La password di default è {0}" />
     <text name="CanBeEmptyToLoginAsHost" value="Può essere vuoto per entrare come ospite." />
     <text name="Register" value="Registrati" />

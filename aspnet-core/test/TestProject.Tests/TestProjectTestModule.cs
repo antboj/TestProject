@@ -1,14 +1,14 @@
 using System;
-using Castle.MicroKernel.Registration;
-using NSubstitute;
 using Abp.AutoMapper;
+using Abp.Configuration.Startup;
 using Abp.Dependency;
 using Abp.Modules;
-using Abp.Configuration.Startup;
 using Abp.Net.Mail;
 using Abp.TestBase;
 using Abp.Zero.Configuration;
 using Abp.Zero.EntityFrameworkCore;
+using Castle.MicroKernel.Registration;
+using NSubstitute;
 using TestProject.EntityFrameworkCore;
 using TestProject.Tests.DependencyInjection;
 
@@ -18,7 +18,7 @@ namespace TestProject.Tests
         typeof(TestProjectApplicationModule),
         typeof(TestProjectEntityFrameworkModule),
         typeof(AbpTestBaseModule)
-        )]
+    )]
     public class TestProjectTestModule : AbpModule
     {
         public TestProjectTestModule(TestProjectEntityFrameworkModule abpProjectNameEntityFrameworkModule)

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Reflection;
+using TestProject.Models;
 
 namespace TestProject.QueryInfoService
 {
@@ -39,12 +39,12 @@ namespace TestProject.QueryInfoService
 
             return binaryEx;
         }
-        
+
         public Expression<Func<TEntity, bool>> GetWhere<TEntity>(Expression binary, ParameterExpression parameterEx)
         {
             return Expression.Lambda<Func<TEntity, bool>>(binary, parameterEx);
         }
-        
+
         private static BinaryExpression GetBinaryExpressionForString(string operatorValue, Expression propertyEx,
             ConstantExpression constantEx)
         {
@@ -56,17 +56,20 @@ namespace TestProject.QueryInfoService
                 case "eq":
                     return Expression.Equal(propertyEx, constantEx);
                 case "ct":
-                    MethodInfo containsMethodInfo = typeof(string).GetMethod("Contains", new[] {typeof(string), typeof(StringComparison)});
+                    var containsMethodInfo =
+                        typeof(string).GetMethod("Contains", new[] {typeof(string), typeof(StringComparison)});
                     var contains = Expression.Call(propertyEx, containsMethodInfo, constantEx, ignore);
                     binEx = Expression.Equal(contains, trueExpression);
                     break;
                 case "stw":
-                    MethodInfo startsWithMethodInfo = typeof(string).GetMethod("StartsWith", new[] { typeof(string), typeof(StringComparison) });
+                    var startsWithMethodInfo =
+                        typeof(string).GetMethod("StartsWith", new[] {typeof(string), typeof(StringComparison)});
                     var startsWith = Expression.Call(propertyEx, startsWithMethodInfo, constantEx, ignore);
                     binEx = Expression.Equal(startsWith, trueExpression);
                     break;
                 case "enw":
-                    MethodInfo endsWithMethodInfo = typeof(string).GetMethod("EndsWith", new[] { typeof(string), typeof(StringComparison) });
+                    var endsWithMethodInfo =
+                        typeof(string).GetMethod("EndsWith", new[] {typeof(string), typeof(StringComparison)});
                     var endsWith = Expression.Call(propertyEx, endsWithMethodInfo, constantEx, ignore);
                     binEx = Expression.Equal(endsWith, trueExpression);
                     break;
@@ -76,7 +79,7 @@ namespace TestProject.QueryInfoService
 
             return binEx;
         }
-        
+
         private static BinaryExpression GetBinaryExpressionForInt(string operatorValue, Expression propertyEx,
             ConstantExpression constantEx)
         {
@@ -99,7 +102,7 @@ namespace TestProject.QueryInfoService
 
         public Expression<Func<TEntity, object>> GetOrderByExpression<TEntity>(string propertyName)
         {
-            ParameterExpression parameterEx = Expression.Parameter(typeof(TEntity), "x");
+            var parameterEx = Expression.Parameter(typeof(TEntity), "x");
             var property = propertyName;
             var propertyEx = Expression.Property(parameterEx, property);
             var convertEx = Expression.Convert(propertyEx, typeof(object));
@@ -112,12 +115,12 @@ namespace TestProject.QueryInfoService
 
             if (condition == "and")
             {
-                Expression<Func<Models.Device, bool>> trueExp = x => true;
+                Expression<Func<Device, bool>> trueExp = x => true;
                 result = trueExp.Body;
             }
             else
             {
-                Expression<Func<Models.Device, bool>> falseExp = x => false;
+                Expression<Func<Device, bool>> falseExp = x => false;
                 result = falseExp.Body;
             }
 
@@ -154,24 +157,23 @@ namespace TestProject.QueryInfoService
                         throw new InvalidOperationException();
                 }
 
-                if (rule.Condition == null)
-                {
-                    continue;
-
-                }
+                if (rule.Condition == null) continue;
 
                 switch (condition)
                 {
                     case "and":
-                        result =  Expression.AndAlso(result, GetFilteredList<TEntity>(parameter, rule.Rules, rule.Condition));
+                        result = Expression.AndAlso(result,
+                            GetFilteredList<TEntity>(parameter, rule.Rules, rule.Condition));
                         break;
                     case "or":
-                        result = Expression.OrElse(result, GetFilteredList<TEntity>(parameter, rule.Rules, rule.Condition));
+                        result = Expression.OrElse(result,
+                            GetFilteredList<TEntity>(parameter, rule.Rules, rule.Condition));
                         break;
                     default:
                         throw new InvalidOperationException();
                 }
             }
+
             return result;
         }
     }

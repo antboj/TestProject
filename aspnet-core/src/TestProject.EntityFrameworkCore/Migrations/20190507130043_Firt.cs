@@ -1,12 +1,30 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TestProject.Migrations
 {
-    public partial class First : Migration
+    public partial class Firt : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AbpPersistedGrants",
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 200, nullable: false),
+                    Type = table.Column<string>(maxLength: 50, nullable: false),
+                    SubjectId = table.Column<string>(maxLength: 200, nullable: true),
+                    ClientId = table.Column<string>(maxLength: 200, nullable: false),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    Expiration = table.Column<DateTime>(nullable: true),
+                    Data = table.Column<string>(maxLength: 50000, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AbpPersistedGrants", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "DeviceTypes",
                 columns: table => new
@@ -25,7 +43,7 @@ namespace TestProject.Migrations
                         column: x => x.ParentId,
                         principalTable: "DeviceTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -81,23 +99,12 @@ namespace TestProject.Migrations
                     DeviceTypePropertyId = table.Column<int>(nullable: false),
                     DeviceId = table.Column<int>(nullable: false),
                     Value = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DevicePropertyValues", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DevicePropertyValues_Devices_DeviceId",
-                        column: x => x.DeviceId,
-                        principalTable: "Devices",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DevicePropertyValues_DeviceTypeProperties_DeviceTypePropertyId",
-                        column: x => x.DeviceTypePropertyId,
-                        principalTable: "DeviceTypeProperties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AbpPersistedGrants_SubjectId_ClientId_Type",
+                table: "AbpPersistedGrants",
+                columns: new[] { "SubjectId", "ClientId", "Type" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_DevicePropertyValues_DeviceId",
@@ -127,6 +134,9 @@ namespace TestProject.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AbpPersistedGrants");
+
             migrationBuilder.DropTable(
                 name: "DevicePropertyValues");
 

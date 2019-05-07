@@ -8,16 +8,16 @@ namespace TestProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<DateTime>(
-                name: "ExpireDate",
-                table: "AbpUserTokens",
+                "ExpireDate",
+                "AbpUserTokens",
                 nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "ExpireDate",
-                table: "AbpUserTokens");
+                "ExpireDate",
+                "AbpUserTokens");
         }
     }
 }

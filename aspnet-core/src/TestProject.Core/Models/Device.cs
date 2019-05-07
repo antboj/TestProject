@@ -7,14 +7,11 @@ namespace TestProject.Models
 {
     public class Device : Entity
     {
-        [Required]
-        [StringLength(255)]
-        public string Name { get; set; }
+        [Required] [StringLength(255)] public string Name { get; set; }
 
         public string Description { get; set; }
 
-        [ForeignKey(nameof(DeviceTypeId))]
-        public DeviceType DeviceType { get; set; }
+        [ForeignKey(nameof(DeviceTypeId))] public DeviceType DeviceType { get; set; }
 
         public int DeviceTypeId { get; set; }
 

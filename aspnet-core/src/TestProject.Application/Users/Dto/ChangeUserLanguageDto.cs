@@ -4,7 +4,6 @@ namespace TestProject.Users.Dto
 {
     public class ChangeUserLanguageDto
     {
-        [Required]
-        public string LanguageName { get; set; }
+        [Required] public string LanguageName { get; set; }
     }
 }
