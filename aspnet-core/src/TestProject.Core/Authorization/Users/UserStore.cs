@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using Abp.Authorization.Users;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
@@ -32,6 +34,11 @@ namespace TestProject.Authorization.Users
                 userOrganizationUnitRepository,
                 organizationUnitRoleRepository)
         {
+        }
+
+        public override Task<User> FindByIdAsync(string userId, CancellationToken cancellationToken = new CancellationToken())
+        {
+            return base.FindByIdAsync(userId, cancellationToken);
         }
     }
 }

@@ -28,6 +28,7 @@ namespace TestProject.Authorization.Users
 
             user.SetNormalizedNames();
 
+
             return user;
         }
     }
