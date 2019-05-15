@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using TestProject.DeviceAppService.Dto;
@@ -29,6 +30,8 @@ namespace TestProject.DeviceAppService
         ///     Return all Devices
         /// </summary>
         /// <returns></returns>
+        [AbpAuthorize("Configuration.Roles.Delete")]
+
         public List<DeviceDto> GetDevices()
         {
             var allDevices = _deviceRepository.GetAll().Include(x => x.DeviceType).ToList();
