@@ -1,8 +1,6 @@
 ﻿using System.Linq;
-using System.Reflection;
 using Abp.Authorization;
 using Abp.Localization;
-using Abp.MultiTenancy;
 using Castle.DynamicProxy.Internal;
 
 namespace TestProject.Authorization
@@ -62,7 +60,6 @@ namespace TestProject.Authorization
                     rootPermission = rootPermission + "." + currentString;
 
                     var isChildCreated = lastCreatedPermission.Children.FirstOrDefault(x => x.Name == rootPermission);
-                        //context.GetPermissionOrNull(rootPermission);
                     if (isChildCreated == null)
                     {
                         lastCreatedPermission = lastCreatedPermission.CreateChildPermission(rootPermission);
