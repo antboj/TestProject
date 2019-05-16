@@ -30,7 +30,7 @@ namespace TestProject.DeviceAppService
         ///     Return all Devices
         /// </summary>
         /// <returns></returns>
-        [AbpAuthorize("Configuration.Roles.Delete")]
+        [AbpAuthorize("GlobalConfiguration.Users.Read")]
 
         public List<DeviceDto> GetDevices()
         {
