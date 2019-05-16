@@ -30,7 +30,6 @@ namespace TestProject.Authorization
 
         private void MakePermissions(IPermissionDefinitionContext context)
         {
-            Permission lastCreatedPermission = null;
             var allPermissions = typeof(PermissionNames).GetAllFields();
 
             foreach (var currentPermission in allPermissions)
@@ -39,6 +38,7 @@ namespace TestProject.Authorization
 
                 var rootPermission = currentPermissionStrings.First();
                 var isCreated = context.GetPermissionOrNull(rootPermission);
+                Permission lastCreatedPermission = null;
                 if (isCreated == null)
                 {
                     lastCreatedPermission = context.CreatePermission(rootPermission);
