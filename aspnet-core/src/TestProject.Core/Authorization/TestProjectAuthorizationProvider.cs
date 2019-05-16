@@ -61,10 +61,11 @@ namespace TestProject.Authorization
 
                     rootPermission = rootPermission + "." + currentString;
 
-                    var isChildCreated = context.GetPermissionOrNull(rootPermission);
+                    var isChildCreated = lastCreatedPermission.Children.FirstOrDefault(x => x.Name == rootPermission);
+                        //context.GetPermissionOrNull(rootPermission);
                     if (isChildCreated == null)
                     {
-                        lastCreatedPermission = context.CreatePermission(rootPermission);
+                        lastCreatedPermission = lastCreatedPermission.CreateChildPermission(rootPermission);
                     }
                     else
                     {
