@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Abp.Authorization;
 using Abp.Authorization.Users;
 using Abp.Configuration;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
+using Abp.MultiTenancy;
 using Abp.Organizations;
 using Abp.Runtime.Caching;
 using Microsoft.AspNetCore.Identity;
@@ -53,6 +55,22 @@ namespace TestProject.Authorization.Users
                 organizationUnitSettings,
                 settingManager)
         {
+        }
+
+        public override Task<User> FindByIdAsync(string userId)
+        {
+            //return base.FindByIdAsync(userId);
+            this.ThrowIfDisposed();
+
+
+            return this.Store.FindByIdAsync(userId, this.CancellationToken);
+
+            //if (user.Result.TenantId == null )
+            //{
+            //    user.Result.TenantId = 1;
+            //}
+
+            //return user;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using TestProject.Authorization;
 using TestProject.DeviceAppService.Dto;
 using TestProject.Models;
 using TestProject.QueryInfoService;
@@ -30,8 +31,7 @@ namespace TestProject.DeviceAppService
         ///     Return all Devices
         /// </summary>
         /// <returns></returns>
-        [AbpAuthorize("GlobalConfiguration.Users.Read")]
-
+        [AbpAuthorize(PermissionNames.GlobalConfiguration_Users_Read)]
         public List<DeviceDto> GetDevices()
         {
             var allDevices = _deviceRepository.GetAll().Include(x => x.DeviceType).ToList();
@@ -45,6 +45,8 @@ namespace TestProject.DeviceAppService
         ///     Create or update Device
         /// </summary>
         /// <param name="input"></param>
+        [AbpAuthorize(PermissionNames.GlobalConfiguration_Users_Create)]
+        [AbpAuthorize(PermissionNames.GlobalConfiguration_Users_Update)]
         public void CreateOrUpdateDevice(NewDeviceDto input)
         {
             if (input.Id == 0)
@@ -97,6 +99,7 @@ namespace TestProject.DeviceAppService
         ///     Delete Device
         /// </summary>
         /// <param name="id"></param>
+        [AbpAuthorize(PermissionNames.GlobalConfiguration_Users_Delete)]
         public void DeleteDevice(int id)
         {
             var deviceToDelete = _deviceRepository.Get(id);
@@ -108,6 +111,7 @@ namespace TestProject.DeviceAppService
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
+        [AbpAuthorize(PermissionNames.GlobalConfiguration_Users_Read)]
         public List<DeviceDto> QueryInfoSearch(QueryInfo input)
         {
             var obj = new QueryInfo();
