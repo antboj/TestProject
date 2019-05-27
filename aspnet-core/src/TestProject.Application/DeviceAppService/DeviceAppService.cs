@@ -12,6 +12,7 @@ using TestProject.QueryInfoService;
 
 namespace TestProject.DeviceAppService
 {
+    [AbpAuthorize]
     public class DeviceAppService : TestProjectAppServiceBase, IDeviceAppService
     {
         private readonly IRepository<DevicePropertyValue> _devicePropertyValueRepository;
@@ -31,9 +32,14 @@ namespace TestProject.DeviceAppService
         ///     Return all Devices
         /// </summary>
         /// <returns></returns>
-        [AbpAuthorize(PermissionNames.GlobalConfiguration_Users_Read)]
+        //[AbpAuthorize(PermissionNames.GlobalConfiguration_Users_Read)]
         public List<DeviceDto> GetDevices()
         {
+
+            //if (!PermissionChecker.IsGranted(PermissionNames.GlobalConfiguration_Users_Create))
+            //{
+            //    throw new AbpAuthorizationException("You are not authorized for this action!");
+            //}
             var allDevices = _deviceRepository.GetAll().Include(x => x.DeviceType).ToList();
 
             var result = ObjectMapper.Map<List<DeviceDto>>(allDevices);
@@ -45,8 +51,8 @@ namespace TestProject.DeviceAppService
         ///     Create or update Device
         /// </summary>
         /// <param name="input"></param>
-        [AbpAuthorize(PermissionNames.GlobalConfiguration_Users_Create)]
-        [AbpAuthorize(PermissionNames.GlobalConfiguration_Users_Update)]
+        //[AbpAuthorize(PermissionNames.GlobalConfiguration_Users_Create)]
+        //[AbpAuthorize(PermissionNames.GlobalConfiguration_Users_Update)]
         public void CreateOrUpdateDevice(NewDeviceDto input)
         {
             if (input.Id == 0)
@@ -111,7 +117,7 @@ namespace TestProject.DeviceAppService
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [AbpAuthorize(PermissionNames.GlobalConfiguration_Users_Read)]
+        //[AbpAuthorize(PermissionNames.GlobalConfiguration_Users_Read)]
         public List<DeviceDto> QueryInfoSearch(QueryInfo input)
         {
             var obj = new QueryInfo();
