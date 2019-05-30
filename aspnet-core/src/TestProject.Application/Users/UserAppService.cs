@@ -24,7 +24,7 @@ using TestProject.Users.Dto;
 
 namespace TestProject.Users
 {
-    [AbpAuthorize(PermissionNames.Pages_Users)]
+    //[AbpAuthorize(PermissionNames.Pages_Users)]
     public class UserAppService :
         AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>, IUserAppService
     {

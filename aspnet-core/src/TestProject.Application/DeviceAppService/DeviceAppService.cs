@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Abp.Authorization;
 using Abp.Domain.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using TestProject.Authorization;
 using TestProject.DeviceAppService.Dto;

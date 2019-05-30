@@ -1,4 +1,5 @@
-﻿using Abp.Modules;
+﻿using Abp.AspNetCore.Mvc.Authorization;
+using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,5 +24,7 @@ namespace TestProject.Web.Host.Startup
         {
             IocManager.RegisterAssemblyByConvention(typeof(TestProjectWebHostModule).GetAssembly());
         }
+
+        
     }
 }

@@ -6,6 +6,9 @@ using Abp.AspNetCore.SignalR.Hubs;
 using Abp.Castle.Logging.Log4Net;
 using Abp.Extensions;
 using Castle.Facilities.Logging;
+using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
@@ -13,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
+using TestProject.Authentication.JwtBearer;
 using TestProject.Configuration;
 using TestProject.Identity;
 
@@ -38,6 +42,16 @@ namespace TestProject.Web.Host.Startup
 
             IdentityRegistrar.Register(services);
             AuthConfigurer.Configure(services, _appConfiguration);
+
+            //services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+            //    .AddIdentityServerAuthentication(
+            //    options =>
+            //    {
+            //        options.Authority = "http://localhost:60087";
+            //        options.ApiName = "deviceApi";
+            //        options.EnableCaching = true;
+            //        options.RequireHttpsMetadata = false;
+            //    });
 
             services.AddSignalR();
 
@@ -65,7 +79,7 @@ namespace TestProject.Web.Host.Startup
                 options.SwaggerDoc("v1", new Info {Title = "TestProject API", Version = "v1"});
                 options.DocInclusionPredicate((docName, description) => true);
 
-                // Define the BearerAuth scheme that's in use
+                //Define the BearerAuth scheme that's in use
                 options.AddSecurityDefinition("bearerAuth", new ApiKeyScheme
                 {
                     Description =
@@ -93,7 +107,10 @@ namespace TestProject.Web.Host.Startup
 
             app.UseStaticFiles();
 
-            app.UseAuthentication();
+            //app.UseJwtTokenMiddleware();
+            app.UseMiddleware<MyAuthMiddleware>();
+
+            // app.UseAuthentication();
 
             app.UseAbpRequestLocalization();
 
