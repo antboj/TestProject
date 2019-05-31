@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -45,13 +46,19 @@ namespace TestProject.Web.Host.Startup
                 if (flag)
                     return;
             }
-            AuthenticationScheme authenticateSchemeAsync = await this.Schemes.GetSchemeAsync("Bearer");
+            AuthenticationScheme authenticateSchemeAsync = await this.Schemes.GetDefaultAuthenticateSchemeAsync();
             if (authenticateSchemeAsync != null)
             {
                 AuthenticateResult authenticateResult = await context.AuthenticateAsync(authenticateSchemeAsync.Name);
                 if (authenticateResult?.Principal != null)
-                   
+                {
+                    //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap[JwtRegisteredClaimNames.Sub] =
+                    //    ClaimTypes.NameIdentifier;
+
                     context.User = authenticateResult.Principal;
+                }
+                    
+                    
             }
             await this._next(context);
         }

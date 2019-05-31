@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Abp.Runtime.Security;
@@ -56,7 +58,10 @@ namespace TestProject.Web.Host.Startup
             //        };
             //    });
 
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = "Bearer";
+                })
                 .AddIdentityServerAuthentication(
                 options =>
                 {
@@ -66,7 +71,11 @@ namespace TestProject.Web.Host.Startup
                     options.RequireHttpsMetadata = false;
                     options.JwtBearerEvents.OnAuthenticationFailed += OnAuthenticationFailed;
                     options.JwtBearerEvents.OnTokenValidated += OnTokenValidated;
-                    
+                    options.InboundJwtClaimTypeMap = new Dictionary<string, string>
+                    {
+                        {JwtRegisteredClaimNames.Sub, ClaimTypes.NameIdentifier }
+                    };
+
                 });
         }
 
