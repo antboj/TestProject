@@ -80,14 +80,14 @@ namespace TestProject.Web.Host.Startup
                 options.DocInclusionPredicate((docName, description) => true);
 
                 //Define the BearerAuth scheme that's in use
-                options.AddSecurityDefinition("bearerAuth", new ApiKeyScheme
-                {
-                    Description =
-                        "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                    Name = "Authorization",
-                    In = "header",
-                    Type = "apiKey"
-                });
+                //options.AddSecurityDefinition("bearerAuth", new ApiKeyScheme
+                //{
+                //    Description =
+                //        "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                //    Name = "Authorization",
+                //    In = "header",
+                //    Type = "apiKey"
+                //});
             });
 
             // Configure Abp and Dependency Injection

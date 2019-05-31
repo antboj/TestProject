@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using TestProject.Authorization;
 using TestProject.DeviceTypeAppService.Dto;
 using TestProject.Models;
 
@@ -30,6 +32,7 @@ namespace TestProject.DeviceTypeAppService
         /// </summary>
         /// <param name="parentId"></param>
         /// <returns></returns>
+        [AbpAuthorize(PermissionNames.GlobalConfiguration_Users_Create)]
         public List<DeviceTypeNestedDto> GetDeviceTypes(int? parentId)
         {
             var baseDeviceTypes = _deviceTypeRepository.GetAll()
