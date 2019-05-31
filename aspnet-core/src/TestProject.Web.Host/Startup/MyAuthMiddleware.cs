@@ -52,9 +52,6 @@ namespace TestProject.Web.Host.Startup
                 AuthenticateResult authenticateResult = await context.AuthenticateAsync(authenticateSchemeAsync.Name);
                 if (authenticateResult?.Principal != null)
                 {
-                    //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap[JwtRegisteredClaimNames.Sub] =
-                    //    ClaimTypes.NameIdentifier;
-
                     context.User = authenticateResult.Principal;
                 }
                     

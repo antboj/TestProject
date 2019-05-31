@@ -43,16 +43,6 @@ namespace TestProject.Web.Host.Startup
             IdentityRegistrar.Register(services);
             AuthConfigurer.Configure(services, _appConfiguration);
 
-            //services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-            //    .AddIdentityServerAuthentication(
-            //    options =>
-            //    {
-            //        options.Authority = "http://localhost:60087";
-            //        options.ApiName = "deviceApi";
-            //        options.EnableCaching = true;
-            //        options.RequireHttpsMetadata = false;
-            //    });
-
             services.AddSignalR();
 
             // Configure CORS for angular2 UI
@@ -109,8 +99,6 @@ namespace TestProject.Web.Host.Startup
 
             //app.UseJwtTokenMiddleware();
             app.UseMiddleware<MyAuthMiddleware>();
-
-            // app.UseAuthentication();
 
             app.UseAbpRequestLocalization();
 
