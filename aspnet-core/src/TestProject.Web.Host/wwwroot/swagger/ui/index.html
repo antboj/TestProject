@@ -76,56 +76,56 @@
         configObject.dom_id = "#swagger-ui";
         configObject.presets = [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset];
         configObject.layout = "StandaloneLayout";
-        configObject.requestInterceptor = function(request) {
-            var token = abp.auth.getToken();
-            request.headers.Authorization = token ? "Bearer " + token : null;
-            return request;
-        };
-        if (!configObject.hasOwnProperty("oauth2RedirectUrl")) {
-            configObject.oauth2RedirectUrl = window.location + "oauth2-redirect.html"; // use the built-in default
-        }
+        //configObject.requestInterceptor = function(request) {
+        //    var token = abp.auth.getToken();
+        //    request.headers.Authorization = token ? "Bearer " + token : null;
+        //    return request;
+        //};
+        //if (!configObject.hasOwnProperty("oauth2RedirectUrl")) {
+        //    configObject.oauth2RedirectUrl = window.location + "oauth2-redirect.html"; // use the built-in default
+        //}
 
-        function getAuthorizeButtonText() {
-            return abp.auth.getToken() ? 'Logout' : 'Authorize';
-        }
+        //function getAuthorizeButtonText() {
+        //    return abp.auth.getToken() ? 'Logout' : 'Authorize';
+        //}
 
-        function getAuthorizeButtonCssClass() {
-            return abp.auth.getToken() ? 'cancel' : 'authorize';
-        }
+        //function getAuthorizeButtonCssClass() {
+        //    return abp.auth.getToken() ? 'cancel' : 'authorize';
+        //}
 
-        configObject.plugins = [
-            function(system) {
-                return {
-                    components: {
-                        authorizeBtn: function() {
-                            return system.React.createElement("button",
-                                {
-                                    id: "authorize",
-                                    className: "btn " + getAuthorizeButtonCssClass(),
-                                    style: {
-                                        lineHeight: "normal"
-                                    },
-                                    onClick: function() {
-                                        var authorizeButton = document.getElementById('authorize');
-                                        if (abp.auth.getToken()) {
-                                            abp.swagger.logout();
-                                            authorizeButton.innerText = getAuthorizeButtonText();
-                                            authorizeButton.className = 'btn ' + getAuthorizeButtonCssClass();
-                                        } else {
-                                            abp.swagger.openAuthDialog(function() {
-                                                authorizeButton.innerText = getAuthorizeButtonText();
-                                                authorizeButton.className = 'btn ' + getAuthorizeButtonCssClass();
-                                                abp.swagger.closeAuthDialog();
-                                            });
-                                        }
-                                    }
-                                },
-                                getAuthorizeButtonText());
-                        }
-                    }
-                };
-            }
-        ];
+        //configObject.plugins = [
+        //    function(system) {
+        //        return {
+        //            components: {
+        //                authorizeBtn: function() {
+        //                    return system.React.createElement("button",
+        //                        {
+        //                            id: "authorize",
+        //                            className: "btn " + getAuthorizeButtonCssClass(),
+        //                            style: {
+        //                                lineHeight: "normal"
+        //                            },
+        //                            onClick: function() {
+        //                                var authorizeButton = document.getElementById('authorize');
+        //                                if (abp.auth.getToken()) {
+        //                                    abp.swagger.logout();
+        //                                    authorizeButton.innerText = getAuthorizeButtonText();
+        //                                    authorizeButton.className = 'btn ' + getAuthorizeButtonCssClass();
+        //                                } else {
+        //                                    abp.swagger.openAuthDialog(function() {
+        //                                        authorizeButton.innerText = getAuthorizeButtonText();
+        //                                        authorizeButton.className = 'btn ' + getAuthorizeButtonCssClass();
+        //                                        abp.swagger.closeAuthDialog();
+        //                                    });
+        //                                }
+        //                            }
+        //                        },
+        //                        getAuthorizeButtonText());
+        //                }
+        //            }
+        //        };
+        //    }
+        //];
         // Build a system
         SwaggerUIBundle(configObject);
     }

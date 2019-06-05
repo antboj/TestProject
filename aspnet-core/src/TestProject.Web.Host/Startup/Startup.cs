@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Abp.AspNetCore;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.Swagger;
 using TestProject.Authentication.JwtBearer;
 using TestProject.Configuration;
@@ -78,6 +80,17 @@ namespace TestProject.Web.Host.Startup
                 //    In = "header",
                 //    Type = "apiKey"
                 //});
+                options.AddSecurityDefinition("oauth2", new OAuth2Scheme
+                {
+                    Type = "oauth2",
+                    Flow = "password",
+                    AuthorizationUrl = "http://localhost:60087/connect/authorize",
+                    TokenUrl = "http://localhost:60087/connect/token",
+                    Scopes = new Dictionary<string, string>
+                    {
+                        {"deviceApi", "Device API" }
+                    }
+                });
             });
 
             // Configure Abp and Dependency Injection
@@ -121,6 +134,10 @@ namespace TestProject.Web.Host.Startup
             // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
             app.UseSwaggerUI(options =>
             {
+                options.OAuthClientId("swaggerApi");
+                options.OAuthAppName("Swagger API");
+                options.OAuth2RedirectUrl("http://localhost:21021/swagger/oauth2-redirect.html");
+                options.OAuthClientSecret("secret");
                 options.SwaggerEndpoint(
                     _appConfiguration["App:ServerRootAddress"].EnsureEndsWith('/') + "swagger/v1/swagger.json",
                     "TestProject API V1");
