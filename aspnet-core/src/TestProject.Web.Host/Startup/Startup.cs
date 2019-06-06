@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.Swagger;
 using TestProject.Authentication.JwtBearer;
 using TestProject.Configuration;
@@ -64,17 +64,23 @@ namespace TestProject.Web.Host.Startup
                         .AllowCredentials()
                 )
             );
-            
+
             // Swagger - Enable this line and the related lines in Configure method to enable swagger UI
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Info {Title = "TestProject API", Version = "v1"});
                 options.DocInclusionPredicate((docName, description) => true);
 
-                options.OperationFilter<AuthorizeCheckOperationFilter>();
-
                 //Define the BearerAuth scheme that's in use
-                options.AddSecurityDefinition("oauth2", new OAuth2Scheme()
+                //options.AddSecurityDefinition("bearerAuth", new ApiKeyScheme
+                //{
+                //    Description =
+                //        "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                //    Name = "Authorization",
+                //    In = "header",
+                //    Type = "apiKey"
+                //});
+                options.AddSecurityDefinition("oauth2", new OAuth2Scheme
                 {
                     Type = "oauth2",
                     Flow = "password",
@@ -85,16 +91,6 @@ namespace TestProject.Web.Host.Startup
                         {"deviceApi", "Device API" }
                     }
                 });
-
-                //options.AddSecurityDefinition("bearer", new ApiKeyScheme()
-                //{
-                //    Type = "apiKey",
-                //    In = "header",
-                //    Name = "Authentication"
-
-                //});
-
-
             });
 
             // Configure Abp and Dependency Injection
@@ -113,13 +109,12 @@ namespace TestProject.Web.Host.Startup
             app.UseCors(_defaultCorsPolicyName); // Enable CORS!
 
             app.UseStaticFiles();
-            
 
             //app.UseJwtTokenMiddleware();
             app.UseMiddleware<MyAuthMiddleware>();
 
             app.UseAbpRequestLocalization();
-            
+
 
             app.UseSignalR(routes => { routes.MapHub<AbpCommonHub>("/signalr"); });
 
@@ -140,9 +135,9 @@ namespace TestProject.Web.Host.Startup
             app.UseSwaggerUI(options =>
             {
                 options.OAuthClientId("swaggerApi");
-                options.OAuthAppName("Swagger Client");
-                options.OAuthClientSecret("secret");
+                options.OAuthAppName("Swagger API");
                 options.OAuth2RedirectUrl("http://localhost:21021/swagger/oauth2-redirect.html");
+                options.OAuthClientSecret("secret");
                 options.SwaggerEndpoint(
                     _appConfiguration["App:ServerRootAddress"].EnsureEndsWith('/') + "swagger/v1/swagger.json",
                     "TestProject API V1");
