@@ -7,18 +7,13 @@ using Abp.AspNetCore.SignalR.Hubs;
 using Abp.Castle.Logging.Log4Net;
 using Abp.Extensions;
 using Castle.Facilities.Logging;
-using IdentityServer4.AccessTokenValidation;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.Swagger;
-using TestProject.Authentication.JwtBearer;
 using TestProject.Configuration;
 using TestProject.Identity;
 
@@ -70,16 +65,9 @@ namespace TestProject.Web.Host.Startup
             {
                 options.SwaggerDoc("v1", new Info {Title = "TestProject API", Version = "v1"});
                 options.DocInclusionPredicate((docName, description) => true);
-
-                //Define the BearerAuth scheme that's in use
-                //options.AddSecurityDefinition("bearerAuth", new ApiKeyScheme
-                //{
-                //    Description =
-                //        "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                //    Name = "Authorization",
-                //    In = "header",
-                //    Type = "apiKey"
-                //});
+                // Work with postman
+                // application/x-www-form-urlencoded request or raw text request
+                // grant_type=password&username=example&password=example&client_id=example&client_secret=example
                 options.AddSecurityDefinition("oauth2", new OAuth2Scheme
                 {
                     Type = "oauth2",
